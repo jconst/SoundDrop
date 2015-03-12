@@ -3,5 +3,5 @@ all:
 
 commit:
 	git add -A
-	git commit -m"simple dropping ball"
+	git commit -m"finished dropping ball acceleration"
 	git push
