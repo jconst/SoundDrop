@@ -25,8 +25,8 @@ class GameScene: SKScene {
         let sequence = SKAction.sequence([drop, wait])
         dropper.runAction(SKAction.repeatActionForever(sequence))
         
-        dropper.xScale = 0.2
-        dropper.yScale = 0.2
+        dropper.xScale = 0.3
+        dropper.yScale = 0.3
         
         dropper.position = CGPointMake(0.5*self.frame.size.width, self.frame.size.height*0.75)
         self.addChild(dropper)

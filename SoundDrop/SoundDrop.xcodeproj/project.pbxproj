@@ -15,6 +15,19 @@
 		F0EEB7361AB6882600149986 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = F0EEB7341AB6882600149986 /* LaunchScreen.xib */; };
 		F0EEB7511AB7CF5D00149986 /* ball@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F0EEB74F1AB7CF5D00149986 /* ball@2x.png */; };
 		F0EEB7521AB7CF5D00149986 /* dropper@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F0EEB7501AB7CF5D00149986 /* dropper@2x.png */; };
+		F0EEB75C1AB8D4E900149986 /* Camera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F0EEB75A1AB8D4E900149986 /* Camera.cpp */; };
+		F0EEB75F1AB8D55D00149986 /* OCCamera.mm in Sources */ = {isa = PBXBuildFile; fileRef = F0EEB75E1AB8D55D00149986 /* OCCamera.mm */; };
+		F0EEB76A1AB8D84500149986 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F0EEB7601AB8D84500149986 /* Accelerate.framework */; };
+		F0EEB76B1AB8D84500149986 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F0EEB7611AB8D84500149986 /* AssetsLibrary.framework */; };
+		F0EEB76C1AB8D84500149986 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F0EEB7621AB8D84500149986 /* AVFoundation.framework */; };
+		F0EEB76D1AB8D84500149986 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F0EEB7631AB8D84500149986 /* CoreGraphics.framework */; };
+		F0EEB76E1AB8D84500149986 /* CoreImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F0EEB7641AB8D84500149986 /* CoreImage.framework */; };
+		F0EEB76F1AB8D84500149986 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F0EEB7651AB8D84500149986 /* CoreMedia.framework */; };
+		F0EEB7701AB8D84500149986 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F0EEB7661AB8D84500149986 /* CoreVideo.framework */; };
+		F0EEB7711AB8D84500149986 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F0EEB7671AB8D84500149986 /* Foundation.framework */; };
+		F0EEB7721AB8D84500149986 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F0EEB7681AB8D84500149986 /* QuartzCore.framework */; };
+		F0EEB7731AB8D84500149986 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F0EEB7691AB8D84500149986 /* UIKit.framework */; };
+		F0EEB7761AB8D91F00149986 /* opencv2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F0EEB7751AB8D91F00149986 /* opencv2.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +41,22 @@
 		F0EEB7351AB6882600149986 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		F0EEB74F1AB7CF5D00149986 /* ball@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ball@2x.png"; sourceTree = "<group>"; };
 		F0EEB7501AB7CF5D00149986 /* dropper@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "dropper@2x.png"; sourceTree = "<group>"; };
+		F0EEB7591AB8D4E900149986 /* SoundDrop-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SoundDrop-Bridging-Header.h"; sourceTree = "<group>"; };
+		F0EEB75A1AB8D4E900149986 /* Camera.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Camera.cpp; sourceTree = "<group>"; };
+		F0EEB75B1AB8D4E900149986 /* Camera.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Camera.h; sourceTree = "<group>"; };
+		F0EEB75D1AB8D55D00149986 /* OCCamera.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OCCamera.h; sourceTree = "<group>"; };
+		F0EEB75E1AB8D55D00149986 /* OCCamera.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = OCCamera.mm; sourceTree = "<group>"; };
+		F0EEB7601AB8D84500149986 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
+		F0EEB7611AB8D84500149986 /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
+		F0EEB7621AB8D84500149986 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		F0EEB7631AB8D84500149986 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		F0EEB7641AB8D84500149986 /* CoreImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreImage.framework; path = System/Library/Frameworks/CoreImage.framework; sourceTree = SDKROOT; };
+		F0EEB7651AB8D84500149986 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
+		F0EEB7661AB8D84500149986 /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
+		F0EEB7671AB8D84500149986 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		F0EEB7681AB8D84500149986 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		F0EEB7691AB8D84500149986 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		F0EEB7751AB8D91F00149986 /* opencv2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = opencv2.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -35,6 +64,17 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F0EEB76A1AB8D84500149986 /* Accelerate.framework in Frameworks */,
+				F0EEB76B1AB8D84500149986 /* AssetsLibrary.framework in Frameworks */,
+				F0EEB76C1AB8D84500149986 /* AVFoundation.framework in Frameworks */,
+				F0EEB76D1AB8D84500149986 /* CoreGraphics.framework in Frameworks */,
+				F0EEB76E1AB8D84500149986 /* CoreImage.framework in Frameworks */,
+				F0EEB76F1AB8D84500149986 /* CoreMedia.framework in Frameworks */,
+				F0EEB7701AB8D84500149986 /* CoreVideo.framework in Frameworks */,
+				F0EEB7711AB8D84500149986 /* Foundation.framework in Frameworks */,
+				F0EEB7721AB8D84500149986 /* QuartzCore.framework in Frameworks */,
+				F0EEB7731AB8D84500149986 /* UIKit.framework in Frameworks */,
+				F0EEB7761AB8D91F00149986 /* opencv2.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -46,6 +86,7 @@
 			children = (
 				F0EEB7241AB6882600149986 /* SoundDrop */,
 				F0EEB7231AB6882600149986 /* Products */,
+				F0EEB7741AB8D86000149986 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -60,12 +101,9 @@
 		F0EEB7241AB6882600149986 /* SoundDrop */ = {
 			isa = PBXGroup;
 			children = (
-				F0EEB7271AB6882600149986 /* AppDelegate.swift */,
-				F0EEB7291AB6882600149986 /* GameScene.sks */,
-				F0EEB72B1AB6882600149986 /* GameScene.swift */,
-				F0EEB72D1AB6882600149986 /* GameViewController.swift */,
-				F0EEB72F1AB6882600149986 /* Main.storyboard */,
-				F0EEB7341AB6882600149986 /* LaunchScreen.xib */,
+				F0EEB7581AB8D4C000149986 /* Computer Vision Code */,
+				F0EEB7561AB8D4A700149986 /* Game Code */,
+				F0EEB7571AB8D4B600149986 /* Miscellaneous */,
 				F0EEB7531AB7CF6500149986 /* Images */,
 				F0EEB7251AB6882600149986 /* Supporting Files */,
 			);
@@ -87,6 +125,56 @@
 				F0EEB7501AB7CF5D00149986 /* dropper@2x.png */,
 			);
 			name = Images;
+			sourceTree = "<group>";
+		};
+		F0EEB7561AB8D4A700149986 /* Game Code */ = {
+			isa = PBXGroup;
+			children = (
+				F0EEB7291AB6882600149986 /* GameScene.sks */,
+				F0EEB72B1AB6882600149986 /* GameScene.swift */,
+				F0EEB72D1AB6882600149986 /* GameViewController.swift */,
+			);
+			name = "Game Code";
+			sourceTree = "<group>";
+		};
+		F0EEB7571AB8D4B600149986 /* Miscellaneous */ = {
+			isa = PBXGroup;
+			children = (
+				F0EEB7271AB6882600149986 /* AppDelegate.swift */,
+				F0EEB72F1AB6882600149986 /* Main.storyboard */,
+				F0EEB7341AB6882600149986 /* LaunchScreen.xib */,
+			);
+			name = Miscellaneous;
+			sourceTree = "<group>";
+		};
+		F0EEB7581AB8D4C000149986 /* Computer Vision Code */ = {
+			isa = PBXGroup;
+			children = (
+				F0EEB75A1AB8D4E900149986 /* Camera.cpp */,
+				F0EEB75B1AB8D4E900149986 /* Camera.h */,
+				F0EEB75D1AB8D55D00149986 /* OCCamera.h */,
+				F0EEB75E1AB8D55D00149986 /* OCCamera.mm */,
+				F0EEB7591AB8D4E900149986 /* SoundDrop-Bridging-Header.h */,
+			);
+			name = "Computer Vision Code";
+			sourceTree = "<group>";
+		};
+		F0EEB7741AB8D86000149986 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				F0EEB7751AB8D91F00149986 /* opencv2.framework */,
+				F0EEB7601AB8D84500149986 /* Accelerate.framework */,
+				F0EEB7611AB8D84500149986 /* AssetsLibrary.framework */,
+				F0EEB7621AB8D84500149986 /* AVFoundation.framework */,
+				F0EEB7631AB8D84500149986 /* CoreGraphics.framework */,
+				F0EEB7641AB8D84500149986 /* CoreImage.framework */,
+				F0EEB7651AB8D84500149986 /* CoreMedia.framework */,
+				F0EEB7661AB8D84500149986 /* CoreVideo.framework */,
+				F0EEB7671AB8D84500149986 /* Foundation.framework */,
+				F0EEB7681AB8D84500149986 /* QuartzCore.framework */,
+				F0EEB7691AB8D84500149986 /* UIKit.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -120,6 +208,7 @@
 				TargetAttributes = {
 					F0EEB7211AB6882600149986 = {
 						CreatedOnToolsVersion = 6.2;
+						DevelopmentTeam = 78CY729S9Z;
 					};
 				};
 			};
@@ -161,7 +250,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F0EEB75C1AB8D4E900149986 /* Camera.cpp in Sources */,
 				F0EEB72C1AB6882600149986 /* GameScene.swift in Sources */,
+				F0EEB75F1AB8D55D00149986 /* OCCamera.mm in Sources */,
 				F0EEB72E1AB6882600149986 /* GameViewController.swift in Sources */,
 				F0EEB7281AB6882600149986 /* AppDelegate.swift in Sources */,
 			);
@@ -272,9 +363,20 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = SoundDrop/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "SoundDrop/SoundDrop-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -283,9 +385,19 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = SoundDrop/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "SoundDrop/SoundDrop-Bridging-Header.h";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
