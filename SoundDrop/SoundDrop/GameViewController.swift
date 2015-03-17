@@ -8,6 +8,7 @@
 
 import UIKit
 import SpriteKit
+import AVFoundation
 
 extension SKNode {
     class func unarchiveFromFile(file : NSString) -> SKNode? {
@@ -26,13 +27,57 @@ extension SKNode {
 }
 
 class GameViewController: UIViewController {
+    
+    let captureSession = AVCaptureSession()
+    var captureDevice : AVCaptureDevice?
+    
+    @IBOutlet var skView: SKView!
+    @IBOutlet var camView: UIView!
+    
+    func setUpSession() {
+        captureSession.sessionPreset = AVCaptureSessionPresetLow
+        
+        let devices = AVCaptureDevice.devices()
+        
+        // Loop through all the capture devices on this phone
+        for device in devices {
+            // Make sure this particular device supports video
+            if (device.hasMediaType(AVMediaTypeVideo)) {
+                // Finally check the position and confirm we've got the back camera
+                if(device.position == AVCaptureDevicePosition.Back) {
+                    self.captureDevice = device as? AVCaptureDevice
+                    self.showSessionInBackground()
+                }
+            }
+        }
+    }
+    
+    func showSessionInBackground() {
+        if self.captureDevice == nil {
+            return
+        }
+        
+        var err : NSError? = nil
+        captureSession.addInput(AVCaptureDeviceInput(device: captureDevice, error: &err))
+        
+        if err != nil {
+            return
+        }
+        
+        let previewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
+        
+        previewLayer.frame = self.view.bounds
+        previewLayer.videoGravity = AVLayerVideoGravityResizeAspectFill
+        
+        self.camView.layer.addSublayer(previewLayer)
+        captureSession.startRunning()
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
         if let scene = GameScene.unarchiveFromFile("GameScene") as? GameScene {
             // Configure the view.
-            let skView = self.view as SKView
             skView.showsFPS = true
             skView.showsNodeCount = true
             
@@ -43,7 +88,10 @@ class GameViewController: UIViewController {
             scene.scaleMode = .AspectFill
             
             skView.presentScene(scene)
+            
+            self.setUpSession()
         }
+        
     }
 
     override func shouldAutorotate() -> Bool {
