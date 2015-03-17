@@ -1,0 +1,11 @@
+Joseph:
+	swift code for ball bouncing + "bar" setting
+
+Jacob:
+	swift code for camera background
+
+Zhi:
+	lua code for the first version of ball dropping (abandoned now) + writeups
+
+Cheng:
+	involved in the discussion of idea and algorithm

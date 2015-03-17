@@ -10,7 +10,7 @@ import SpriteKit
 
 class GameScene: SKScene {
     override func didMoveToView(view: SKView) {
-        /* Setup your scene here */
+        // Set gravity
         self.physicsWorld.gravity = CGVectorMake(0, -2.5)
         createBallDropper()
     }
@@ -50,6 +50,7 @@ class GameScene: SKScene {
     override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
         for touch: AnyObject in touches {
             let location = touch.locationInNode(self)
+            // Temperarily set rotation as random number
             let randomFloat = Float(arc4random()) / Float(UINT32_MAX)
             let rotation = Double(randomFloat) * 2.0 * M_PI
             createLineBumper(location, rotation: rotation)
