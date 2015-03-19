@@ -15,8 +15,6 @@
 		F0EEB7361AB6882600149986 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = F0EEB7341AB6882600149986 /* LaunchScreen.xib */; };
 		F0EEB7511AB7CF5D00149986 /* ball@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F0EEB74F1AB7CF5D00149986 /* ball@2x.png */; };
 		F0EEB7521AB7CF5D00149986 /* dropper@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F0EEB7501AB7CF5D00149986 /* dropper@2x.png */; };
-		F0EEB75C1AB8D4E900149986 /* Camera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F0EEB75A1AB8D4E900149986 /* Camera.cpp */; };
-		F0EEB75F1AB8D55D00149986 /* OCCamera.mm in Sources */ = {isa = PBXBuildFile; fileRef = F0EEB75E1AB8D55D00149986 /* OCCamera.mm */; };
 		F0EEB76A1AB8D84500149986 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F0EEB7601AB8D84500149986 /* Accelerate.framework */; };
 		F0EEB76B1AB8D84500149986 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F0EEB7611AB8D84500149986 /* AssetsLibrary.framework */; };
 		F0EEB76C1AB8D84500149986 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F0EEB7621AB8D84500149986 /* AVFoundation.framework */; };
@@ -28,6 +26,9 @@
 		F0EEB7721AB8D84500149986 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F0EEB7681AB8D84500149986 /* QuartzCore.framework */; };
 		F0EEB7731AB8D84500149986 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F0EEB7691AB8D84500149986 /* UIKit.framework */; };
 		F0EEB7761AB8D91F00149986 /* opencv2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F0EEB7751AB8D91F00149986 /* opencv2.framework */; };
+		F0EEB77F1ABB2EA800149986 /* ImageReader.mm in Sources */ = {isa = PBXBuildFile; fileRef = F0EEB77E1ABB2EA800149986 /* ImageReader.mm */; };
+		F0EEB7821ABB2FEB00149986 /* OpenCVImageReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F0EEB7801ABB2FEB00149986 /* OpenCVImageReader.cpp */; };
+		F0EEB7841ABB369400149986 /* testImage.png in Resources */ = {isa = PBXBuildFile; fileRef = F0EEB7831ABB369400149986 /* testImage.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -42,10 +43,6 @@
 		F0EEB74F1AB7CF5D00149986 /* ball@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ball@2x.png"; sourceTree = "<group>"; };
 		F0EEB7501AB7CF5D00149986 /* dropper@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "dropper@2x.png"; sourceTree = "<group>"; };
 		F0EEB7591AB8D4E900149986 /* SoundDrop-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SoundDrop-Bridging-Header.h"; sourceTree = "<group>"; };
-		F0EEB75A1AB8D4E900149986 /* Camera.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Camera.cpp; sourceTree = "<group>"; };
-		F0EEB75B1AB8D4E900149986 /* Camera.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Camera.h; sourceTree = "<group>"; };
-		F0EEB75D1AB8D55D00149986 /* OCCamera.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OCCamera.h; sourceTree = "<group>"; };
-		F0EEB75E1AB8D55D00149986 /* OCCamera.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = OCCamera.mm; sourceTree = "<group>"; };
 		F0EEB7601AB8D84500149986 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
 		F0EEB7611AB8D84500149986 /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
 		F0EEB7621AB8D84500149986 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
@@ -57,6 +54,11 @@
 		F0EEB7681AB8D84500149986 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		F0EEB7691AB8D84500149986 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		F0EEB7751AB8D91F00149986 /* opencv2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = opencv2.framework; sourceTree = "<group>"; };
+		F0EEB77D1ABB2EA800149986 /* ImageReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageReader.h; sourceTree = "<group>"; };
+		F0EEB77E1ABB2EA800149986 /* ImageReader.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ImageReader.mm; sourceTree = "<group>"; };
+		F0EEB7801ABB2FEB00149986 /* OpenCVImageReader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OpenCVImageReader.cpp; sourceTree = "<group>"; };
+		F0EEB7811ABB2FEB00149986 /* OpenCVImageReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpenCVImageReader.h; sourceTree = "<group>"; };
+		F0EEB7831ABB369400149986 /* testImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = testImage.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -121,6 +123,7 @@
 		F0EEB7531AB7CF6500149986 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				F0EEB7831ABB369400149986 /* testImage.png */,
 				F0EEB74F1AB7CF5D00149986 /* ball@2x.png */,
 				F0EEB7501AB7CF5D00149986 /* dropper@2x.png */,
 			);
@@ -150,11 +153,11 @@
 		F0EEB7581AB8D4C000149986 /* Computer Vision Code */ = {
 			isa = PBXGroup;
 			children = (
-				F0EEB75A1AB8D4E900149986 /* Camera.cpp */,
-				F0EEB75B1AB8D4E900149986 /* Camera.h */,
-				F0EEB75D1AB8D55D00149986 /* OCCamera.h */,
-				F0EEB75E1AB8D55D00149986 /* OCCamera.mm */,
 				F0EEB7591AB8D4E900149986 /* SoundDrop-Bridging-Header.h */,
+				F0EEB7811ABB2FEB00149986 /* OpenCVImageReader.h */,
+				F0EEB7801ABB2FEB00149986 /* OpenCVImageReader.cpp */,
+				F0EEB77D1ABB2EA800149986 /* ImageReader.h */,
+				F0EEB77E1ABB2EA800149986 /* ImageReader.mm */,
 			);
 			name = "Computer Vision Code";
 			sourceTree = "<group>";
@@ -238,6 +241,7 @@
 				F0EEB7521AB7CF5D00149986 /* dropper@2x.png in Resources */,
 				F0EEB7361AB6882600149986 /* LaunchScreen.xib in Resources */,
 				F0EEB72A1AB6882600149986 /* GameScene.sks in Resources */,
+				F0EEB7841ABB369400149986 /* testImage.png in Resources */,
 				F0EEB7511AB7CF5D00149986 /* ball@2x.png in Resources */,
 				F0EEB7311AB6882600149986 /* Main.storyboard in Resources */,
 			);
@@ -250,10 +254,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F0EEB75C1AB8D4E900149986 /* Camera.cpp in Sources */,
+				F0EEB7821ABB2FEB00149986 /* OpenCVImageReader.cpp in Sources */,
 				F0EEB72C1AB6882600149986 /* GameScene.swift in Sources */,
-				F0EEB75F1AB8D55D00149986 /* OCCamera.mm in Sources */,
 				F0EEB72E1AB6882600149986 /* GameViewController.swift in Sources */,
+				F0EEB77F1ABB2EA800149986 /* ImageReader.mm in Sources */,
 				F0EEB7281AB6882600149986 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -11,14 +11,14 @@ import SpriteKit
 class GameScene: SKScene {
     override func didMoveToView(view: SKView) {
         // Set gravity
-        self.physicsWorld.gravity = CGVectorMake(0, -2.5)
+        self.physicsWorld.gravity = CGVectorMake(0, -3)
         createBallDropper()
     }
     
     func createBallDropper() {
         let dropper = SKSpriteNode(imageNamed: "dropper")
         dropper.name = "dropper"
-        let wait = SKAction.waitForDuration(0.7)
+        let wait = SKAction.waitForDuration(0.5)
         let drop = SKAction.runBlock {
             self.dropBall(dropper)
         }

@@ -26,14 +26,20 @@ extension SKNode {
     }
 }
 
-class GameViewController: UIViewController {
-    
+class GameViewController: UIViewController
+{
     let captureSession = AVCaptureSession()
     var captureDevice : AVCaptureDevice?
+    let imgReader: ImageReader
     
     @IBOutlet var skView: SKView!
     @IBOutlet var camView: UIView!
-
+    
+    required init(coder aDecoder: NSCoder) {
+        imgReader = ImageReader()
+        super.init(coder: aDecoder)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -50,9 +56,9 @@ class GameViewController: UIViewController {
             
             skView.presentScene(scene)
             
-//            self.setUpSession()
+            self.setUpSession()
+            self.setupSnapshotTimer()
         }
-        
     }
     
     func setUpSession() {
@@ -93,7 +99,23 @@ class GameViewController: UIViewController {
         self.camView.layer.addSublayer(previewLayer)
         captureSession.startRunning()
     }
+
+    func setupSnapshotTimer() {
+        NSTimer.scheduledTimerWithTimeInterval(0.1, target: self, selector:"detectLines", userInfo:nil, repeats:true)
+    }
     
+    func detectLines() {
+        let snapshot = self.takeSnapshot()
+        let line = imgReader.lineInImage(snapshot)
+        println("start: \(line.start) end: \(line.end)")
+    }
+    
+    func takeSnapshot() -> UIImage {
+        // TODO: real snapshot
+        let snapshot = UIImage(named: "testImage.png")!
+        return snapshot
+    }
+
     override func shouldAutorotate() -> Bool {
         return false
     }
