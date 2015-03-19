@@ -23,11 +23,11 @@ Mat imgConvert, imgProcessed, imgThresholded;
 int c1 = 0, c2=1;       // c1 = Center Point of Big Circle and c2 = Center Point of Small Circle
 
 //Default is red colored circles, will change later
-int iLowH = 50;
-int iHighH = 255;
-int iLowS = 50;
+int iLowH = 100;
+int iHighH = 150;
+int iLowS = 150;
 int iHighS = 255;
-int iLowV = 50;
+int iLowV = 150;
 int iHighV = 255;
 
 vector<Point2f> lineInImage(Mat &imgOriginal)
@@ -83,7 +83,6 @@ void preprocessImage(Mat &imgOriginal, Mat &imgProc)
     //Convert the captured frame from BGR to HSV
     cvtColor(imgOriginal, imgConvert, COLOR_BGR2HSV);
     GaussianBlur(imgConvert,imgThresholded, Size(3,3), 1.5, 1.5);
-
 
     //Checks if array elements lie between the elements of two other arrays.
     inRange(imgThresholded, Scalar(iLowH, iLowS, iLowV), Scalar(iHighH, iHighS, iHighV), imgProc);
