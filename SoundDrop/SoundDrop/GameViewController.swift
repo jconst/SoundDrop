@@ -108,6 +108,7 @@ class GameViewController: UIViewController
         let snapshot = self.takeSnapshot()
         let line = imgReader.lineInImage(snapshot)
         println("start: \(line.start) end: \(line.end)")
+        lineLocations = [line]
     }
     
     func takeSnapshot() -> UIImage {

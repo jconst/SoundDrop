@@ -9,6 +9,9 @@
 import SpriteKit
 
 class GameScene: SKScene {
+    
+    var lineBumpers = Array<SKSpriteNode>()
+    
     override func didMoveToView(view: SKView) {
         // Set gravity
         self.physicsWorld.gravity = CGVectorMake(0, -3)
@@ -53,16 +56,14 @@ class GameScene: SKScene {
             // Temperarily set rotation as random number
             let randomFloat = Float(arc4random()) / Float(UINT32_MAX)
             let rotation = Double(randomFloat) * 2.0 * M_PI
-            createLineBumper(location, rotation: rotation)
+            lineBumpers.append(createLineBumper(location, rotation: CGFloat(rotation), width: 100))
         }
     }
     
-    func createLineBumper(location: CGPoint, rotation: Double) {
+    func createLineBumper(location: CGPoint, rotation: CGFloat, width: CGFloat) -> SKSpriteNode {
         let bumper = SKSpriteNode(color: UIColor.whiteColor(), size: CGSizeMake(100, 10))
         
-        bumper.position = location
-        let rotate = SKAction.rotateByAngle(CGFloat(rotation), duration: 0)
-        bumper.runAction(rotate)
+        updateLineBumper(bumper, location: location, rotation: rotation, width: width)
         
         bumper.physicsBody = SKPhysicsBody(rectangleOfSize:bumper.frame.size)
         bumper.physicsBody!.restitution = 0.5
@@ -72,9 +73,29 @@ class GameScene: SKScene {
         bumper.physicsBody!.allowsRotation = true
         
         self.addChild(bumper)
+        return bumper
+    }
+    
+    func updateLineBumper(bumper: SKSpriteNode, location: CGPoint, rotation: CGFloat, width: CGFloat) {
+        bumper.xScale = width / 100.0
+        bumper.position = location
+        let lastRotation = bumper.zRotation
+        println(lastRotation)
+        let rotate = SKAction.rotateByAngle(CGFloat(rotation - lastRotation), duration: 0)
+        bumper.runAction(rotate)
     }
    
     override func update(currentTime: CFTimeInterval) {
-        /* Called before each frame is rendered */
+
+        for (i, line) in enumerate(lineLocations) {
+            if lineBumpers.count <= i {
+                break
+            }
+            let bumper = lineBumpers[i]
+            let loc = centerOfLine(line)
+            let rot = angleOfLine(line)
+            let width = lengthOfLine(line)
+            updateLineBumper(bumper, location: loc, rotation: rot, width: width)
+        }
     }
 }

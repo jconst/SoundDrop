@@ -17,7 +17,6 @@
 
 using namespace cv;
 using namespace std;
-#define PI 3.14159265
 
 Mat imgConvert, imgProcessed, imgThresholded;
 int c1 = 0, c2=1;       // c1 = Center Point of Big Circle and c2 = Center Point of Small Circle
@@ -68,14 +67,6 @@ vector<Point2f> lineInImage(Mat &imgOriginal)
     }
     
     return mc;
-    
-    // Could also return an angle:
-    
-    //float angle = (atan2(mc[c2].y - mc[c1].y, mc[c2].x - mc[c1].x))*180/PI; //Determine the angle from horizontal line
-    //if (mc[c2].y - mc[c1].y >= 0)
-    //    cout << " ,* " << 360 - angle << endl;
-    //else
-    //    cout << " , " << angle*(-1) << endl;
 }
 
 void preprocessImage(Mat &imgOriginal, Mat &imgProc)

@@ -29,6 +29,8 @@
 		F0EEB77F1ABB2EA800149986 /* ImageReader.mm in Sources */ = {isa = PBXBuildFile; fileRef = F0EEB77E1ABB2EA800149986 /* ImageReader.mm */; };
 		F0EEB7821ABB2FEB00149986 /* OpenCVImageReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F0EEB7801ABB2FEB00149986 /* OpenCVImageReader.cpp */; };
 		F0EEB7841ABB369400149986 /* testImage.png in Resources */ = {isa = PBXBuildFile; fileRef = F0EEB7831ABB369400149986 /* testImage.png */; };
+		F0EEB7881ABB6F5D00149986 /* Globals.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0EEB7871ABB6F5D00149986 /* Globals.swift */; };
+		F0EEB78A1ABB719A00149986 /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0EEB7891ABB719A00149986 /* Helpers.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -59,6 +61,8 @@
 		F0EEB7801ABB2FEB00149986 /* OpenCVImageReader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OpenCVImageReader.cpp; sourceTree = "<group>"; };
 		F0EEB7811ABB2FEB00149986 /* OpenCVImageReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpenCVImageReader.h; sourceTree = "<group>"; };
 		F0EEB7831ABB369400149986 /* testImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = testImage.png; sourceTree = "<group>"; };
+		F0EEB7871ABB6F5D00149986 /* Globals.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Globals.swift; sourceTree = "<group>"; };
+		F0EEB7891ABB719A00149986 /* Helpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Helpers.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -136,6 +140,8 @@
 				F0EEB7291AB6882600149986 /* GameScene.sks */,
 				F0EEB72B1AB6882600149986 /* GameScene.swift */,
 				F0EEB72D1AB6882600149986 /* GameViewController.swift */,
+				F0EEB7871ABB6F5D00149986 /* Globals.swift */,
+				F0EEB7891ABB719A00149986 /* Helpers.swift */,
 			);
 			name = "Game Code";
 			sourceTree = "<group>";
@@ -255,7 +261,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				F0EEB7821ABB2FEB00149986 /* OpenCVImageReader.cpp in Sources */,
+				F0EEB78A1ABB719A00149986 /* Helpers.swift in Sources */,
 				F0EEB72C1AB6882600149986 /* GameScene.swift in Sources */,
+				F0EEB7881ABB6F5D00149986 /* Globals.swift in Sources */,
 				F0EEB72E1AB6882600149986 /* GameViewController.swift in Sources */,
 				F0EEB77F1ABB2EA800149986 /* ImageReader.mm in Sources */,
 				F0EEB7281AB6882600149986 /* AppDelegate.swift in Sources */,
