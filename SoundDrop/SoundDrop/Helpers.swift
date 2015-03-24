@@ -32,6 +32,6 @@ func centerOfLine(line: Line) -> CGPoint
 
 func angleOfLine(line: Line) -> CGFloat
 {
-    return CGFloat(atan2(line.end.y - line.start.y,
+    return -CGFloat(atan2(line.end.y - line.start.y,
                          line.end.x - line.start.x));
 }

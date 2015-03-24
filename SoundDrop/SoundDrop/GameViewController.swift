@@ -98,8 +98,10 @@ class GameViewController: UIViewController
         
         camLayer = AVCaptureVideoPreviewLayer(session: captureSession)
         
+        camLayer.transform = CATransform3DMakeAffineTransform(CGAffineTransformMakeRotation(-CGFloat(M_PI)/2.0))
+        
         camLayer.frame = self.view.bounds
-        camLayer.videoGravity = AVLayerVideoGravityResizeAspectFill
+        camLayer.videoGravity = AVLayerVideoGravityResizeAspect
         
         self.camView.layer.addSublayer(camLayer)
         captureSession.startRunning()
@@ -117,6 +119,8 @@ class GameViewController: UIViewController
                     if port.mediaType == AVMediaTypeVideo {
                         if let s = conn as? AVCaptureConnection {
                             self.videoConnection = s
+
+                            
                             return true
                         }
                     }
@@ -128,7 +132,7 @@ class GameViewController: UIViewController
     }
 
     func setupSnapshotTimer() {
-        NSTimer.scheduledTimerWithTimeInterval(0.1, target: self, selector:"takeSnapshot", userInfo:nil, repeats:true)
+        NSTimer.scheduledTimerWithTimeInterval(0.2, target: self, selector:"takeSnapshot", userInfo:nil, repeats:true)
     }
     
     func detectLines(img: UIImage) {
@@ -143,8 +147,9 @@ class GameViewController: UIViewController
         }
         
         self.capture.captureStillImageAsynchronouslyFromConnection(self.videoConnection, completionHandler: { (cmb: CMSampleBuffer!, err) -> Void in
+            
             if cmb == nil || err != nil {
-                NSLog("Error capturing image.")
+                NSLog("Error capturing image.", err)
                 
                 return
             }

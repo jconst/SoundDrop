@@ -77,10 +77,10 @@ class GameScene: SKScene {
     }
     
     func updateLineBumper(bumper: SKSpriteNode, location: CGPoint, rotation: CGFloat, width: CGFloat) {
-        bumper.xScale = width / 100.0
-        bumper.position = location
+//        bumper.xScale = width / 100.0
+        bumper.position = CGPoint(x: location.x + 400, y: UIScreen.mainScreen().bounds.size.height - location.y)
         let lastRotation = bumper.zRotation
-        println(lastRotation)
+//        println(lastRotation)
         let rotate = SKAction.rotateByAngle(CGFloat(rotation - lastRotation), duration: 0)
         bumper.runAction(rotate)
     }
