@@ -12,7 +12,7 @@ using namespace std;
 //----------------------------------    Global variables
 
 Mat imgOriginal, imgConvert, imgProcessed, imgThresholded, imgDrawing;
-//RNG rng(12345);
+RNG rng(12345);
 int c1 = 0, c2=1;       // c1 = Center Point of Big Circle and c2 = Center Point of Small Circle
 //double aAreaBig = 0;  //
 
@@ -37,12 +37,12 @@ int main( int argc, char **argv )
     int iHighV = 255;
 
     //Create trackbars in "HSV Control" window
-    createTrackbar("LowH", "HSV Control", &iLowH, 240); //Hue (0 - 179)
+    createTrackbar("LowH", "HSV Control", &iLowH, 200); //Hue (0 - 179)
     createTrackbar("HighH", "HSV Control", &iHighH, 255);
-    createTrackbar("LowS", "HSV Control", &iLowS, 165); //Saturation (0 - 255)
-    createTrackbar("HighS", "HSV Control", &iHighS, 180);
-    createTrackbar("LowV", "HSV Control", &iLowV, 185);//Value (0 - 255)
-    createTrackbar("HighV", "HSV Control", &iHighV, 205);
+    createTrackbar("LowS", "HSV Control", &iLowS, 180); //Saturation (0 - 255)
+    createTrackbar("HighS", "HSV Control", &iHighS, 240);
+    createTrackbar("LowV", "HSV Control", &iLowV, 100);//Value (0 - 255)
+    createTrackbar("HighV", "HSV Control", &iHighV, 200);
 
     vector< vector<Point> > contours;
     vector< Vec4i > hierarchy;
@@ -88,7 +88,6 @@ int main( int argc, char **argv )
         dilate( imgProcessed, imgProcessed, getStructuringElement(MORPH_ELLIPSE, Size(10,10)) ); 
         erode(imgProcessed, imgProcessed, getStructuringElement(MORPH_ELLIPSE, Size(10,10)) );
         
-        //imshow("Processed",imgProcessed);
 
 //-------------------------     Image Processing
     
@@ -96,15 +95,13 @@ int main( int argc, char **argv )
         findContours(imgProcessed, contours, hierarchy, CV_RETR_TREE, CV_CHAIN_APPROX_SIMPLE, Point(0,0));
         //Mat imgDrawing = Mat::zeros( imgOriginal.size(), CV_8UC3 );
         cout << "# " << contours.size();
-        
-        if (contours.size() == 2) {   
-            /*
-            for( int i = 0; i < contours.size(); i++ )
-            {
-                Scalar color = Scalar( rng.uniform(0, 255), rng.uniform(0,255), rng.uniform(0,255) );
-                drawContours( imgOriginal, contours, i, color, 2, 8, hierarchy, 0, Point(0,0) );
-            }
-            */
+        for( int i = 0; i < contours.size(); i++ )
+        {
+            Scalar color = Scalar( rng.uniform(0, 255), rng.uniform(0,255), rng.uniform(0,255) );
+            drawContours( imgProcessed, contours, i, color, 2, 8, hierarchy, 0, Point(0,0) );
+        }        
+
+        if (contours.size() == 2) { 
             //Identify the biggest circle
             if (contourArea(contours[0]) < contourArea(contours[1])) {
                 c1 = 1; 
