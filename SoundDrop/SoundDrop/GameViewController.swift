@@ -35,6 +35,11 @@ class GameViewController: UIViewController
     @IBOutlet var skView: SKView!
     @IBOutlet var camView: UIView!
     
+    let capture = AVCaptureStillImageOutput()
+    var videoConnection: AVCaptureConnection!
+    
+    var camLayer: AVCaptureVideoPreviewLayer!
+    
     required init(coder aDecoder: NSCoder) {
         imgReader = ImageReader()
         super.init(coder: aDecoder)
@@ -91,30 +96,67 @@ class GameViewController: UIViewController
             return
         }
         
-        let previewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
+        camLayer = AVCaptureVideoPreviewLayer(session: captureSession)
         
-        previewLayer.frame = self.view.bounds
-        previewLayer.videoGravity = AVLayerVideoGravityResizeAspectFill
+        camLayer.frame = self.view.bounds
+        camLayer.videoGravity = AVLayerVideoGravityResizeAspectFill
         
-        self.camView.layer.addSublayer(previewLayer)
+        self.camView.layer.addSublayer(camLayer)
         captureSession.startRunning()
+        
+        self.capture.outputSettings = NSDictionary(objectsAndKeys: AVVideoCodecJPEG, AVVideoCodecKey)
+        self.captureSession.addOutput(self.capture)
+        
+        self.findVideoConnection()
+    }
+    
+    func findVideoConnection() -> Bool {
+        for conn in self.capture.connections {
+            if conn.inputPorts != nil {
+                for port in conn.inputPorts! {
+                    if port.mediaType == AVMediaTypeVideo {
+                        if let s = conn as? AVCaptureConnection {
+                            self.videoConnection = s
+                            return true
+                        }
+                    }
+                }
+            }
+        }
+        
+        return false
     }
 
     func setupSnapshotTimer() {
-        NSTimer.scheduledTimerWithTimeInterval(0.1, target: self, selector:"detectLines", userInfo:nil, repeats:true)
+        NSTimer.scheduledTimerWithTimeInterval(0.1, target: self, selector:"takeSnapshot", userInfo:nil, repeats:true)
     }
     
-    func detectLines() {
-        let snapshot = self.takeSnapshot()
-        let line = imgReader.lineInImage(snapshot)
+    func detectLines(img: UIImage) {
+        let line = imgReader.lineInImage(img)
         println("start: \(line.start) end: \(line.end)")
         lineLocations = [line]
     }
     
-    func takeSnapshot() -> UIImage {
-        // TODO: real snapshot
-        let snapshot = UIImage(named: "testImage.png")!
-        return snapshot
+    func takeSnapshot() {
+        if self.videoConnection == nil && !self.findVideoConnection() {
+            return
+        }
+        
+        self.capture.captureStillImageAsynchronouslyFromConnection(self.videoConnection, completionHandler: { (cmb: CMSampleBuffer!, err) -> Void in
+            if cmb == nil || err != nil {
+                NSLog("Error capturing image.")
+                
+                return
+            }
+            
+            let exifAttachments = CMGetAttachment(cmb, "imageCapturedSuccessfully", nil)
+            if let imageData = AVCaptureStillImageOutput.jpegStillImageNSDataRepresentation(cmb) {
+                if let img = UIImage(data: imageData) {
+                    // break here to preview image
+                    self.detectLines(img)
+                }
+            }
+        })
     }
 
     override func shouldAutorotate() -> Bool {
