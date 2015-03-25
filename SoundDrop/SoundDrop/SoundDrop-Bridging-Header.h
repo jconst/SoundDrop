@@ -3,3 +3,4 @@
 //
 
 #import "ImageReader.h"
+#import "SoundManager.h"

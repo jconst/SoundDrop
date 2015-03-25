@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F060FFC31AC373DC008F79C9 /* libpd-ios.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F060FFBE1AC373A6008F79C9 /* libpd-ios.a */; };
+		F060FFC51AC373E5008F79C9 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F060FFC41AC373E5008F79C9 /* AudioToolbox.framework */; };
+		F060FFC81AC374D2008F79C9 /* bounce.pd in Resources */ = {isa = PBXBuildFile; fileRef = F060FFC71AC374D2008F79C9 /* bounce.pd */; };
+		F060FFCC1AC378E8008F79C9 /* SoundManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F060FFCB1AC378E8008F79C9 /* SoundManager.m */; };
 		F0EEB7281AB6882600149986 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0EEB7271AB6882600149986 /* AppDelegate.swift */; };
 		F0EEB72A1AB6882600149986 /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = F0EEB7291AB6882600149986 /* GameScene.sks */; };
 		F0EEB72C1AB6882600149986 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0EEB72B1AB6882600149986 /* GameScene.swift */; };
@@ -33,7 +37,36 @@
 		F0EEB78A1ABB719A00149986 /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0EEB7891ABB719A00149986 /* Helpers.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		F060FFBD1AC373A6008F79C9 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F060FFB81AC373A6008F79C9 /* libpd.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D2AAC07E0554694100DB518D;
+			remoteInfo = "libpd-ios";
+		};
+		F060FFBF1AC373A6008F79C9 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F060FFB81AC373A6008F79C9 /* libpd.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 119013AB1486450C00086F19;
+			remoteInfo = "libpd-osx";
+		};
+		F060FFC11AC373CF008F79C9 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F060FFB81AC373A6008F79C9 /* libpd.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = D2AAC07D0554694100DB518D;
+			remoteInfo = "libpd-ios";
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
+		F060FFB81AC373A6008F79C9 /* libpd.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = libpd.xcodeproj; path = libpd/libpd.xcodeproj; sourceTree = "<group>"; };
+		F060FFC41AC373E5008F79C9 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		F060FFC71AC374D2008F79C9 /* bounce.pd */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = bounce.pd; path = ../../bounce.pd; sourceTree = "<group>"; };
+		F060FFCA1AC378E8008F79C9 /* SoundManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SoundManager.h; sourceTree = "<group>"; };
+		F060FFCB1AC378E8008F79C9 /* SoundManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SoundManager.m; sourceTree = "<group>"; };
 		F0EEB7221AB6882600149986 /* SoundDrop.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SoundDrop.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F0EEB7261AB6882600149986 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F0EEB7271AB6882600149986 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -70,8 +103,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F060FFC31AC373DC008F79C9 /* libpd-ios.a in Frameworks */,
 				F0EEB76A1AB8D84500149986 /* Accelerate.framework in Frameworks */,
 				F0EEB76B1AB8D84500149986 /* AssetsLibrary.framework in Frameworks */,
+				F060FFC51AC373E5008F79C9 /* AudioToolbox.framework in Frameworks */,
 				F0EEB76C1AB8D84500149986 /* AVFoundation.framework in Frameworks */,
 				F0EEB76D1AB8D84500149986 /* CoreGraphics.framework in Frameworks */,
 				F0EEB76E1AB8D84500149986 /* CoreImage.framework in Frameworks */,
@@ -87,9 +122,29 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		F060FFB91AC373A6008F79C9 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				F060FFBE1AC373A6008F79C9 /* libpd-ios.a */,
+				F060FFC01AC373A6008F79C9 /* libpd-osx.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		F060FFC61AC374B9008F79C9 /* Pure Data */ = {
+			isa = PBXGroup;
+			children = (
+				F060FFCA1AC378E8008F79C9 /* SoundManager.h */,
+				F060FFCB1AC378E8008F79C9 /* SoundManager.m */,
+				F060FFC71AC374D2008F79C9 /* bounce.pd */,
+			);
+			name = "Pure Data";
+			sourceTree = "<group>";
+		};
 		F0EEB7191AB6882600149986 = {
 			isa = PBXGroup;
 			children = (
+				F060FFB81AC373A6008F79C9 /* libpd.xcodeproj */,
 				F0EEB7241AB6882600149986 /* SoundDrop */,
 				F0EEB7231AB6882600149986 /* Products */,
 				F0EEB7741AB8D86000149986 /* Frameworks */,
@@ -109,6 +164,7 @@
 			children = (
 				F0EEB7581AB8D4C000149986 /* Computer Vision Code */,
 				F0EEB7561AB8D4A700149986 /* Game Code */,
+				F060FFC61AC374B9008F79C9 /* Pure Data */,
 				F0EEB7571AB8D4B600149986 /* Miscellaneous */,
 				F0EEB7531AB7CF6500149986 /* Images */,
 				F0EEB7251AB6882600149986 /* Supporting Files */,
@@ -149,6 +205,7 @@
 		F0EEB7571AB8D4B600149986 /* Miscellaneous */ = {
 			isa = PBXGroup;
 			children = (
+				F0EEB7591AB8D4E900149986 /* SoundDrop-Bridging-Header.h */,
 				F0EEB7271AB6882600149986 /* AppDelegate.swift */,
 				F0EEB72F1AB6882600149986 /* Main.storyboard */,
 				F0EEB7341AB6882600149986 /* LaunchScreen.xib */,
@@ -159,7 +216,6 @@
 		F0EEB7581AB8D4C000149986 /* Computer Vision Code */ = {
 			isa = PBXGroup;
 			children = (
-				F0EEB7591AB8D4E900149986 /* SoundDrop-Bridging-Header.h */,
 				F0EEB7811ABB2FEB00149986 /* OpenCVImageReader.h */,
 				F0EEB7801ABB2FEB00149986 /* OpenCVImageReader.cpp */,
 				F0EEB77D1ABB2EA800149986 /* ImageReader.h */,
@@ -171,6 +227,7 @@
 		F0EEB7741AB8D86000149986 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				F060FFC41AC373E5008F79C9 /* AudioToolbox.framework */,
 				F0EEB7751AB8D91F00149986 /* opencv2.framework */,
 				F0EEB7601AB8D84500149986 /* Accelerate.framework */,
 				F0EEB7611AB8D84500149986 /* AssetsLibrary.framework */,
@@ -200,6 +257,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				F060FFC21AC373CF008F79C9 /* PBXTargetDependency */,
 			);
 			name = SoundDrop;
 			productName = SoundDrop;
@@ -232,6 +290,12 @@
 			mainGroup = F0EEB7191AB6882600149986;
 			productRefGroup = F0EEB7231AB6882600149986 /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = F060FFB91AC373A6008F79C9 /* Products */;
+					ProjectRef = F060FFB81AC373A6008F79C9 /* libpd.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				F0EEB7211AB6882600149986 /* SoundDrop */,
@@ -239,11 +303,29 @@
 		};
 /* End PBXProject section */
 
+/* Begin PBXReferenceProxy section */
+		F060FFBE1AC373A6008F79C9 /* libpd-ios.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libpd-ios.a";
+			remoteRef = F060FFBD1AC373A6008F79C9 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		F060FFC01AC373A6008F79C9 /* libpd-osx.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libpd-osx.a";
+			remoteRef = F060FFBF1AC373A6008F79C9 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
+
 /* Begin PBXResourcesBuildPhase section */
 		F0EEB7201AB6882600149986 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F060FFC81AC374D2008F79C9 /* bounce.pd in Resources */,
 				F0EEB7521AB7CF5D00149986 /* dropper@2x.png in Resources */,
 				F0EEB7361AB6882600149986 /* LaunchScreen.xib in Resources */,
 				F0EEB72A1AB6882600149986 /* GameScene.sks in Resources */,
@@ -265,12 +347,21 @@
 				F0EEB72C1AB6882600149986 /* GameScene.swift in Sources */,
 				F0EEB7881ABB6F5D00149986 /* Globals.swift in Sources */,
 				F0EEB72E1AB6882600149986 /* GameViewController.swift in Sources */,
+				F060FFCC1AC378E8008F79C9 /* SoundManager.m in Sources */,
 				F0EEB77F1ABB2EA800149986 /* ImageReader.mm in Sources */,
 				F0EEB7281AB6882600149986 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		F060FFC21AC373CF008F79C9 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "libpd-ios";
+			targetProxy = F060FFC11AC373CF008F79C9 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		F0EEB72F1AB6882600149986 /* Main.storyboard */ = {
@@ -390,6 +481,7 @@
 				SWIFT_OBJC_BRIDGING_HEADER = "SoundDrop/SoundDrop-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = "1,2";
+				USER_HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/libpd/**";
 			};
 			name = Debug;
 		};
@@ -411,6 +503,7 @@
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "SoundDrop/SoundDrop-Bridging-Header.h";
 				TARGETED_DEVICE_FAMILY = "1,2";
+				USER_HEADER_SEARCH_PATHS = "$(PROJECT_DIR)/libpd/**";
 			};
 			name = Release;
 		};

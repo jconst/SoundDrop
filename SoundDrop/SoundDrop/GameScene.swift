@@ -63,12 +63,11 @@ class GameScene: SKScene {
     func createLineBumper(location: CGPoint, rotation: CGFloat, width: CGFloat) -> SKSpriteNode {
         let bumper = SKSpriteNode(color: UIColor.whiteColor(), size: CGSizeMake(100, 10))
         
-        updateLineBumper(bumper, location: location, rotation: rotation, width: width)
+        updateLineBumper(bumper, location: location, rotation: rotation)
         
         bumper.physicsBody = SKPhysicsBody(rectangleOfSize:bumper.frame.size)
         bumper.physicsBody!.restitution = 0.5
         bumper.physicsBody!.friction = 0
-        // make physicsBody static
         bumper.physicsBody!.dynamic = false
         bumper.physicsBody!.allowsRotation = true
         
@@ -76,26 +75,21 @@ class GameScene: SKScene {
         return bumper
     }
     
-    func updateLineBumper(bumper: SKSpriteNode, location: CGPoint, rotation: CGFloat, width: CGFloat) {
-//        bumper.xScale = width / 100.0
-        bumper.position = CGPoint(x: location.x + 400, y: UIScreen.mainScreen().bounds.size.height - location.y)
+    func updateLineBumper(bumper: SKSpriteNode, location: CGPoint, rotation: CGFloat) {
+        bumper.position = location
         let lastRotation = bumper.zRotation
-//        println(lastRotation)
         let rotate = SKAction.rotateByAngle(CGFloat(rotation - lastRotation), duration: 0)
         bumper.runAction(rotate)
     }
    
     override func update(currentTime: CFTimeInterval) {
 
-        for (i, line) in enumerate(lineLocations) {
-            if lineBumpers.count <= i {
-                break
-            }
-            let bumper = lineBumpers[i]
-            let loc = centerOfLine(line)
-            let rot = angleOfLine(line)
-            let width = lengthOfLine(line)
-            updateLineBumper(bumper, location: loc, rotation: rot, width: width)
-        }
+//        for (i, line) in enumerate(lineLocations) {
+//            if lineBumpers.count <= i {
+//                break
+//            }
+//            let bumper = lineBumpers[i]
+//            updateLineBumper(bumper, location: loc, rotation: rot, width: width)
+//        }
     }
 }

@@ -85,16 +85,15 @@ UIImage *uiImageFromCVMat(Mat cvMat)
 
 @implementation ImageReader
 
-- (Line)lineInImage:(UIImage *)image
+- (NSArray *)flashesInImage:(UIImage *)image
 {
     Mat mat = cvMatFromUIImage(image);
-    vector<Point2f> points = lineInImage(mat);
-    if (points.size() != 2) {
-        return {CGPointZero, CGPointZero};
+    vector<Point2f> points = flashesInImage(mat);
+    NSMutableArray *ret = [NSMutableArray new];
+    for (Point2f pt : points) {
+        [ret addObject:[NSValue valueWithCGPoint:cgPointFromPoint2f(pt)]];
     }
-    Line line = {cgPointFromPoint2f(points[0]),
-                 cgPointFromPoint2f(points[1])};
-    return line;
+    return ret;
 }
 
 @end

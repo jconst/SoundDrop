@@ -9,14 +9,9 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
-
-typedef struct {
-    CGPoint start;
-    CGPoint end;
-} Line;
-
 @interface ImageReader : NSObject
 
-- (Line)lineInImage:(UIImage *)image;
+/// @return NSArray of CGPoints wrapped in NSValues
+- (NSArray *)flashesInImage:(UIImage *)image;
 
 @end

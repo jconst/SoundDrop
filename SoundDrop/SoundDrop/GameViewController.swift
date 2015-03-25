@@ -136,12 +136,14 @@ class GameViewController: UIViewController
     }
     
     func detectLines(img: UIImage) {
-        let line = imgReader.lineInImage(img)
-        println("start: \(line.start) end: \(line.end)")
-        lineLocations = [line]
+        let points = imgReader.flashesInImage(img).map {(val) -> CGPoint in
+            val.CGPointValue()
+        }
+        lineLocations = points
     }
     
     func takeSnapshot() {
+        soundManager.playBounce()
         if self.videoConnection == nil && !self.findVideoConnection() {
             return
         }

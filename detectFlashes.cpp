@@ -9,15 +9,13 @@
 
 using namespace cv;
 using namespace std;
-#define PI 3.14159265
 
 //----------------------------------    Global variables
 
 Mat curFrame, lastFrame, curGray, diff, threshed, blurred;
-int c1 = 0, c2=1;
-int numLights = 1;
-int minArea = 10;
-int maxArea = 1000;
+int numLights = 2;
+int minArea = 0;
+int maxArea = 200;
 vector<Point2f> lightPoints(numLights, Point2f(0,0));
 
 
@@ -26,14 +24,6 @@ int main(int argc, char **argv)
     cout.precision(3);
     cvNamedWindow( "Original", CV_WINDOW_AUTOSIZE);
     moveWindow("Original", 20,200);
-
-//------------------------------    This default setting is for red color and variables
-    int iLowH = 164;
-    int iHighH = 179;
-    int iLowS = 88; 
-    int iHighS = 255;
-    int iLowV = 116;
-    int iHighV = 255;
 
     vector< vector<Point> > contours;
     vector< Vec4i > hierarchy;
@@ -66,8 +56,7 @@ int main(int argc, char **argv)
 
         cvtColor(curFrame, curGray, COLOR_BGR2GRAY);
         absdiff(lastFrame, curGray, diff);
-
-        GaussianBlur(diff, blurred, Size(21,21), 1.5, 1.5);
+        GaussianBlur(diff, blurred, Size(3,3), 0, 0);
 
         inRange(blurred, Scalar(200), Scalar(255), threshed); 
 
@@ -98,6 +87,8 @@ int main(int argc, char **argv)
         });
         int numFound = min((int)contours.size(), numLights);
         for (int i=0; i < numFound; ++i) {
+            if (contours[i].size() == 0)
+                continue;
             Moments mts = moments(contours[i]);
             lightPoints[i] = Point2f(mts.m10/mts.m00, mts.m01/mts.m00);
             cout << i << "th biggest contour at x:" << lightPoints[i].x
@@ -108,7 +99,7 @@ int main(int argc, char **argv)
         for (auto i = lightPoints.begin(); i != lightPoints.end(); ++i) {
             circle(curFrame, *i, 15, Scalar(0, 0, 255), -1);
         }
-        imshow("Original",curFrame);
+        imshow("Original",threshed);
 
         if (waitKey(30) == 27) {
             cout << "ESC key is pressed by user" << endl;

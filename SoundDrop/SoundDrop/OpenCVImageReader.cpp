@@ -14,75 +14,65 @@
 #include <opencv2/highgui/highgui.hpp>
 #include "opencv2/imgproc/imgproc.hpp"
 #include <iostream>
+#include <algorithm>
+#include <functional>
 
 using namespace cv;
 using namespace std;
 
-Mat imgConvert, imgProcessed, imgThresholded;
-int c1 = 0, c2=1;       // c1 = Center Point of Big Circle and c2 = Center Point of Small Circle
+Mat curFrame, lastFrame, curGray, diff, threshed, blurred;
 
-//Default is red colored circles, will change later
-int iLowH = 100;
-int iHighH = 150;
-int iLowS = 150;
-int iHighS = 255;
-int iLowV = 150;
-int iHighV = 255;
+int numLights = 1;
+int minArea = 10;
+int maxArea = 1000;
 
-vector<Point2f> lineInImage(Mat &imgOriginal)
+vector< vector<Point> > contours;
+vector<Point2f> lightPoints(numLights, Point2f(0,0));
+vector<Vec4i> hierarchy;
+
+vector<Point2f> flashesInImage(Mat &curFrame)
 {
-    vector< vector<Point> > contours;
-    vector< Vec4i > hierarchy;
-    
-    //-- Image pre-processing
-    preprocessImage(imgOriginal, imgProcessed);
-    
-    //-- Image Processing
-    
-    //Find Contours
-    findContours(imgProcessed, contours, hierarchy, CV_RETR_TREE, CV_CHAIN_APPROX_SIMPLE, Point(0,0));
-    cout << "# " << contours.size();
-    
-    if (contours.size() != 2) {
-        cout << " No mark detected." << endl;
+    if (lastFrame.empty()) {
+        lastFrame = curFrame.clone();
         return vector<Point2f>();
     }
-    //Identify the biggest circle
-    if (contourArea(contours[0]) < contourArea(contours[1])) {
-        c1 = 1;
-        c2 = 0;
-    } else {
-        c1 = 0;
-        c2 = 1;
+    
+    diffImages(curFrame, lastFrame, diff);
+    
+    //Find Contours
+    findContours(threshed, contours, hierarchy, CV_RETR_LIST, CV_CHAIN_APPROX_SIMPLE, Point(0,0));
+    
+    //Identify the biggest n contours
+    sort(contours.begin(), contours.end(),
+         [](const vector<Point> &c1, const vector<Point> &c2) -> bool {
+             return contourArea(c1) > contourArea(c2);
+         });
+    remove_if(contours.begin(), contours.end(),
+              [](const vector<Point> &c) -> bool {
+                  int area = contourArea(c);
+                  return area < minArea || area > maxArea;
+              });
+    int numFound = min((int)contours.size(), numLights);
+    for (int i=0; i < numFound; ++i) {
+        if (contours[i].size() == 0)
+            continue;
+        Moments mts = moments(contours[i]);
+        lightPoints[i] = Point2f(mts.m10/mts.m00, mts.m01/mts.m00);
+        cout << i << "th biggest contour at x:" << lightPoints[i].x
+             << " y:" << lightPoints[i].y << " has area "
+             << contourArea(contours[i]) << endl;
     }
     
-    vector<Moments> mu(contours.size() );       /// Get the moments
-    for( int i = 0; i < contours.size(); i++ ) {
-        mu[i] = moments( contours[i], false );
-    }
-    
-    vector<Point2f> mc( contours.size() );      ///  Get the mass centers
-    for( int i = 0; i < contours.size(); i++) {
-        mc[i] = Point2f( mu[i].m10/mu[i].m00 , mu[i].m01/mu[i].m00 );
-    }
-    
-    return mc;
+    lastFrame = curGray.clone();
+    return lightPoints;
 }
 
-void preprocessImage(Mat &imgOriginal, Mat &imgProc)
+void diffImages(Mat &cur, Mat &last, Mat &dest)
 {
-    //Convert the captured frame from BGR to HSV
-    cvtColor(imgOriginal, imgConvert, COLOR_BGR2HSV);
-    GaussianBlur(imgConvert,imgThresholded, Size(3,3), 1.5, 1.5);
-
-    //Checks if array elements lie between the elements of two other arrays.
-    inRange(imgThresholded, Scalar(iLowH, iLowS, iLowV), Scalar(iHighH, iHighS, iHighV), imgProc);
-
-    //morphological opening (removes small objects from the foreground)
-    erode(imgProc, imgProc, getStructuringElement(MORPH_ELLIPSE, Size(5, 5)) );
-    dilate(imgProc, imgProc, getStructuringElement(MORPH_ELLIPSE, Size(5, 5)) );
+    cvtColor(cur, curGray, COLOR_BGR2GRAY);
+    absdiff(last, curGray, diff);
     
-    //morphological closing (removes small holes from the foreground)
-    dilate(imgProc, imgProc, getStructuringElement(MORPH_ELLIPSE, Size(10,10)) );
-    erode(imgProc, imgProc, getStructuringElement(MORPH_ELLIPSE, Size(10,10)) );
+    GaussianBlur(diff, blurred, Size(31,31), 0, 0);
+    
+    inRange(blurred, Scalar(210), Scalar(255), threshed);
 }

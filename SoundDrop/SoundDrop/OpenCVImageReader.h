@@ -16,9 +16,9 @@ using namespace cv;
 using namespace std;
 
 // "Public" interface
-vector<Point2f> lineInImage(Mat &img);
+vector<Point2f> flashesInImage(Mat &img);
+// --
 
-// Just for debugging
-void preprocessImage(Mat &imgOriginal, Mat &imgProc);
+void diffImages(Mat &cur, Mat &last, Mat &dest);
 
 #endif

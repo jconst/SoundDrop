@@ -6,4 +6,5 @@
 //  Copyright (c) 2015 jconst. All rights reserved.
 //
 
-var lineLocations = Array<Line>()
+var lineLocations = Array<CGPoint>()
+let soundManager = SoundManager()
