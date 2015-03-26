@@ -143,7 +143,6 @@ class GameViewController: UIViewController
     }
     
     func takeSnapshot() {
-        soundManager.playBounce()
         if self.videoConnection == nil && !self.findVideoConnection() {
             return
         }

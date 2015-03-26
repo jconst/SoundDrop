@@ -8,13 +8,16 @@
 
 import SpriteKit
 
-class GameScene: SKScene {
+class GameScene: SKScene, SKPhysicsContactDelegate {
     
     var lineBumpers = Array<SKSpriteNode>()
+    let ballCategory: UInt32 = 0
+    let bumperCategory: UInt32 = 1
     
     override func didMoveToView(view: SKView) {
         // Set gravity
         self.physicsWorld.gravity = CGVectorMake(0, -3)
+        self.physicsWorld.contactDelegate = self
         createBallDropper()
     }
     
@@ -48,6 +51,8 @@ class GameScene: SKScene {
         ball.physicsBody!.restitution = 1
         ball.physicsBody!.linearDamping = 0
         ball.physicsBody!.allowsRotation = false
+        ball.physicsBody!.categoryBitMask = ballCategory
+        ball.physicsBody!.contactTestBitMask = bumperCategory
     }
     
     override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
@@ -68,8 +73,9 @@ class GameScene: SKScene {
         bumper.physicsBody = SKPhysicsBody(rectangleOfSize:bumper.frame.size)
         bumper.physicsBody!.restitution = 0.5
         bumper.physicsBody!.friction = 0
-        bumper.physicsBody!.dynamic = false
+        bumper.physicsBody!.affectedByGravity = false
         bumper.physicsBody!.allowsRotation = true
+        bumper.physicsBody!.categoryBitMask = bumperCategory
         
         self.addChild(bumper)
         return bumper
@@ -91,5 +97,9 @@ class GameScene: SKScene {
 //            let bumper = lineBumpers[i]
 //            updateLineBumper(bumper, location: loc, rotation: rot, width: width)
 //        }
+    }
+
+    func didBeginContact(contact: SKPhysicsContact) {
+        soundManager.playBounce()
     }
 }
