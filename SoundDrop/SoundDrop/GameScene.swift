@@ -60,7 +60,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             let location = touch.locationInNode(self)
             // Temperarily set rotation as random number
             let randomFloat = Float(arc4random()) / Float(UINT32_MAX)
-            let rotation = Double(randomFloat) * 2.0 * M_PI
+            let rotation = (Double(randomFloat) * 2.0 * M_PI) + M_PI
             lineBumpers.append(createLineBumper(location, rotation: CGFloat(rotation), width: 100))
         }
     }
@@ -81,22 +81,24 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         return bumper
     }
     
-    func updateLineBumper(bumper: SKSpriteNode, location: CGPoint, rotation: CGFloat) {
+    func updateLineBumper(bumper: SKSpriteNode, location: CGPoint, rotation: CGFloat? = nil) {
         bumper.position = location
-        let lastRotation = bumper.zRotation
-        let rotate = SKAction.rotateByAngle(CGFloat(rotation - lastRotation), duration: 0)
-        bumper.runAction(rotate)
+        if let rot = rotation {
+            let lastRotation = bumper.zRotation
+            let rotate = SKAction.rotateByAngle(CGFloat(rot - lastRotation), duration: 0)
+            bumper.runAction(rotate)
+        }
     }
    
     override func update(currentTime: CFTimeInterval) {
 
-//        for (i, line) in enumerate(lineLocations) {
-//            if lineBumpers.count <= i {
-//                break
-//            }
-//            let bumper = lineBumpers[i]
-//            updateLineBumper(bumper, location: loc, rotation: rot, width: width)
-//        }
+        for (i, loc) in enumerate(lineLocations) {
+            if lineBumpers.count <= i {
+                break
+            }
+            let bumper = lineBumpers[i]
+            updateLineBumper(bumper, location: loc)
+        }
     }
 
     func didBeginContact(contact: SKPhysicsContact) {

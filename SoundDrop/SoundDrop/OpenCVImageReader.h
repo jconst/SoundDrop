@@ -9,6 +9,8 @@
 #ifndef __SoundDrop__OpenCVImageReader__
 #define __SoundDrop__OpenCVImageReader__
 
+#import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 #include <iostream>
 #include <opencv2/core/core.hpp>
 
@@ -17,8 +19,13 @@ using namespace std;
 
 // "Public" interface
 vector<Point2f> flashesInImage(Mat &img);
+
+CGPoint cgPointFromPoint2f(Point2f pt);
+Mat cvMatFromUIImage(UIImage *image);
+UIImage *uiImageFromCVMat(Mat cvMat);
 // --
 
+// For testing:
 void diffImages(Mat &cur, Mat &last, Mat &dest);
 
 #endif
