@@ -10,6 +10,6 @@
 
 @interface SoundManager : NSObject
 
-- (void)playBounce;
+- (void)playBounceWithContactSpeed:(double)speed;
 
 @end

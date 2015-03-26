@@ -11,6 +11,7 @@
 		F060FFC51AC373E5008F79C9 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F060FFC41AC373E5008F79C9 /* AudioToolbox.framework */; };
 		F060FFC81AC374D2008F79C9 /* bounce.pd in Resources */ = {isa = PBXBuildFile; fileRef = F060FFC71AC374D2008F79C9 /* bounce.pd */; };
 		F060FFCC1AC378E8008F79C9 /* SoundManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F060FFCB1AC378E8008F79C9 /* SoundManager.m */; };
+		F060FFD11AC38CC6008F79C9 /* master.pd in Resources */ = {isa = PBXBuildFile; fileRef = F060FFD01AC38CC6008F79C9 /* master.pd */; };
 		F0EEB7281AB6882600149986 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0EEB7271AB6882600149986 /* AppDelegate.swift */; };
 		F0EEB72A1AB6882600149986 /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = F0EEB7291AB6882600149986 /* GameScene.sks */; };
 		F0EEB72C1AB6882600149986 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0EEB72B1AB6882600149986 /* GameScene.swift */; };
@@ -67,6 +68,7 @@
 		F060FFC71AC374D2008F79C9 /* bounce.pd */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = bounce.pd; path = ../../bounce.pd; sourceTree = "<group>"; };
 		F060FFCA1AC378E8008F79C9 /* SoundManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SoundManager.h; sourceTree = "<group>"; };
 		F060FFCB1AC378E8008F79C9 /* SoundManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SoundManager.m; sourceTree = "<group>"; };
+		F060FFD01AC38CC6008F79C9 /* master.pd */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = master.pd; path = ../../master.pd; sourceTree = "<group>"; };
 		F0EEB7221AB6882600149986 /* SoundDrop.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SoundDrop.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F0EEB7261AB6882600149986 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F0EEB7271AB6882600149986 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -136,6 +138,7 @@
 			children = (
 				F060FFCA1AC378E8008F79C9 /* SoundManager.h */,
 				F060FFCB1AC378E8008F79C9 /* SoundManager.m */,
+				F060FFD01AC38CC6008F79C9 /* master.pd */,
 				F060FFC71AC374D2008F79C9 /* bounce.pd */,
 			);
 			name = "Pure Data";
@@ -332,6 +335,7 @@
 				F0EEB7841ABB369400149986 /* testImage.png in Resources */,
 				F0EEB7511AB7CF5D00149986 /* ball@2x.png in Resources */,
 				F0EEB7311AB6882600149986 /* Main.storyboard in Resources */,
+				F060FFD11AC38CC6008F79C9 /* master.pd in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

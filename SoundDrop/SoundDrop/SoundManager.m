@@ -23,7 +23,7 @@
     if (!(self = [super init]))
         return nil;
     
-    self.bouncePatch = [PdFile openFileNamed:@"bounce.pd"
+    self.bouncePatch = [PdFile openFileNamed:@"master.pd"
                                         path:[[NSBundle mainBundle] resourcePath]];
     
     self.controller = [PdAudioController new];
@@ -36,9 +36,11 @@
     return self;
 }
 
-- (void)playBounce
+- (void)playBounceWithContactSpeed:(double)speed
 {
-    [PdBase sendBangToReceiver:@"notebang"];
+    int midiKey = 73 + (((speed / 1.5) - 0.5) * 48);
+    
+    [PdBase sendFloat:midiKey toReceiver:@"bouncekey"];
 }
 
 @end

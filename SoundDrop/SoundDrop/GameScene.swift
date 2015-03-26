@@ -100,6 +100,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
 
     func didBeginContact(contact: SKPhysicsContact) {
-        soundManager.playBounce()
+        soundManager.playBounceWithContactSpeed(Double(contact.collisionImpulse))
     }
 }
