@@ -1,3 +1,0 @@
-1. Sound effect of the ball bouncing
-2. Image detection
-3. set rotation of the "bar"
