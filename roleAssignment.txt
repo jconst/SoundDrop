@@ -1,11 +1,11 @@
 Joseph:
-	swift code for ball bouncing + "bar" setting
+	swift code for ball bouncing + "bar" setting + openCV + OSC sending
 
 Jacob:
-	swift code for camera background
+	swift code for camera background  + openCV + OSC sending
 
 Zhi:
 	lua code for the first version of ball dropping (abandoned now) + writeups
 
 Cheng:
-	involved in the discussion of idea and algorithm
+	Lua code for slave device + OSC receiving + sound generating
