@@ -46,11 +46,12 @@ function createFlowboxes()
 	release:Push(0.00002)
 end
 
-function gotOSC(self, num)
-	DPrint("OSC: ".. num)
+function gotOSC(self, num, flashFrequency)
+	DPrint("OSC: ".. num.." "..flashFrequency)
 	currentfrequency = freq2norm(num)
 	push:Push(currentfrequency)
 	trigger:Push(1)
+	SetTorchFlashFrequency(flashFrequency)
 end
 
 function selectButton()
@@ -58,7 +59,7 @@ function selectButton()
 	--in the future replace random with frequency we want to send
 	--now it sends to itself
 	--also can send rotation data to master piece
-	SendOSCMessage(host,8888,"/urMus/numbers",math.random(220,1000))
+	SendOSCMessage(host,8888,"/urMus/numbers",math.random(220,1000),math.random(220,1000))
 end
 
 --now sound pulse time is constrained by deselect button
