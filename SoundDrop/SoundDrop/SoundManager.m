@@ -39,7 +39,9 @@
 - (void)playBounceWithContactSpeed:(double)speed
 {
     int midiKey = 73 + (((speed / 1.5) - 0.5) * 48);
+    double frequency = pow(440.0, (midiKey-69));
     
+    //Todo: send frequency over OSC to slave app
     [PdBase sendFloat:midiKey toReceiver:@"bouncekey"];
 }
 
