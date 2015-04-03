@@ -147,7 +147,7 @@ vector<Point2f> flashPointsInImage(Mat &curFrame)
     }
     
     lastFrame = curGray.clone();
-    return lightPoints;
+    return vector<Point2f>(&lightPoints[0], &lightPoints[contours.size()]);
 }
 
 void diffImages(Mat &cur, Mat &last, Mat &dest)

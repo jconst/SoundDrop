@@ -162,8 +162,8 @@ class GameViewController: UIViewController
                 val.CGPointValue()
             }
         lineLocations = lineLocations
-            .map {
-                return self.findClosestFlash(flashes, maxJump: flashMaxJump, point: $0)
+            .map { loc -> CGPoint in
+                return self.findClosestFlash(flashes, maxJump: flashMaxJump, point: loc)
             }
     }
     
@@ -171,18 +171,22 @@ class GameViewController: UIViewController
         if flashes.count == 0 {
             return point
         }
-        return flashes[0]
         // TODO: If this algorithm isn't satisfactory, try using some heuristic
         // combination of flash size as well as closeness to the point
-//        let closest: CGPoint = flashes.reduce(flashes[0]) { (best, cur) in
-//            let bestDist = distanceBetween(best, point)
-//            let curDist = distanceBetween(cur, point)
-//            return curDist < bestDist ? cur : best
-//        }
-//        if distanceBetween(closest, point) > maxJump {
-//            return point
-//        }
-//        return lerp(point, closest, 0.5)
+        
+        var closest = flashes[0]
+        var smallestDist = distanceBetween(closest, point)
+        for cur in flashes {
+            let curDist = distanceBetween(cur, point)
+            if curDist < smallestDist {
+                smallestDist = curDist
+                closest = cur
+            }
+        }
+        if distanceBetween(closest, point) > maxJump {
+            return point
+        }
+        return closest//lerp(point, closest, 0.5)
     }
     
     override func shouldAutorotate() -> Bool {
