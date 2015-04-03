@@ -26,9 +26,17 @@ function createFlowboxes()
 	sustain = FlowBox(FBPush)
 	release =  FlowBox(FBPush)
 	adsr = FlowBox(FBADSR)
-
+	kick = FlowBox(FBSample)
+	kick:AddFile("kick.wav")
+	kick_trigger = FlowBox(FBPush)
+	snare = FlowBox(FBSample)
+	snare:AddFile("snare.wav")
+	snare_trigger = FlowBox(FBPush)
+	
 --links
 	dac.In:SetPull(sinosc.Out)
+	dac.In:SetPull(kick.Out)
+	dac.In:SetPull(snare.Out)
 	push.Out:SetPush(sinosc.Freq)
 	trigger.Out:SetPush(adsr.Trigger)
 	attack.Out:SetPush(adsr.Attack)
@@ -36,8 +44,12 @@ function createFlowboxes()
 	sustain.Out:SetPush(adsr.Sustain)
 	release.Out:SetPush(adsr.Release)
 	sinosc.Amp:SetPull(adsr.Out)
+	kick_trigger.Out:SetPush(kick.Amp)
+	snare_trigger.Out:SetPush(snare.Amp)
 	
 	push:Push(currentfrequency)
+	kick_trigger:Push(0)
+	snare_trigger:Push(0)
 	--can modify the parameters to get different sound
 	trigger:Push(0)
 	attack:Push(0.1)
@@ -51,7 +63,7 @@ function gotOSC(self, num, flashFrequency)
 	currentfrequency = freq2norm(num)
 	push:Push(currentfrequency)
 	trigger:Push(1)
-	SetTorchFlashFrequency(flashFrequency)
+	--SetTorchFlashFrequency(flashFrequency)
 end
 
 function selectButton()
@@ -69,6 +81,23 @@ function deselectButton()
 	trigger:Push(-1)
 end
 
+function selectButton2()
+	kick_trigger:Push(1)
+end
+function deselectButton2()
+	kick_trigger:Push(0)
+end
+function selectButton3()
+	snare_trigger:Push(1)
+end
+function deselectButton3()
+	snare_trigger:Push(0)
+end
+
+function accel(region, x, y, z)
+	DPrint(x) --rotation
+end
+
 function createButtons()
 	--create a button to send osc message to itself by pressing the button
 	r = Region()
@@ -82,9 +111,42 @@ function createButtons()
 	r:Handle("OnTouchDown", selectButton)
 	r:Handle("OnTouchUp", deselectButton)
 	r:Handle("OnOSCMessage",gotOSC)
+	--don't have rotation info handler
+	--the closest one is OnHeading
+	--r:Handle("OnHeading",heading)
+	r:Handle("OnRotation", rotate)
+	r:Handle("OnAccelerate", accel)
 	SetOSCPort(8888)
 	host,port = StartOSCListener()
 	r:EnableInput(true)
 	r:Show()
+	
+	r2 = Region()
+	r2:SetWidth(ScreenWidth()/2)
+	r2:SetHeight(ScreenHeight()/4)
+	r2:SetAnchor("BOTTOMLEFT",UIParent,"BOTTOMLEFT",ScreenWidth()/2,0)
+	r2.t = r2:Texture(0,255,255,255)
+	r2.tb = r2:TextLabel()
+	r2.tb:SetLabel("play kick")
+	r2.tb:SetColor(255,0,0,255)
+	r2.tb:SetFontHeight(20)
+	r2:Handle("OnTouchDown", selectButton2)
+	r2:Handle("OnTouchUp", deselectButton2)
+	r2:EnableInput(true)
+	r2:Show()
+	
+	r3 = Region()
+	r3:SetWidth(ScreenWidth()/2)
+	r3:SetHeight(ScreenHeight()/4)
+	r3:SetAnchor("TOPLEFT",UIParent,"TOPLEFT",0,0)
+	r3.t = r3:Texture(255,0,255,255)
+	r3.tb = r3:TextLabel()
+	r3.tb:SetLabel("play snare")
+	r3.tb:SetColor(0,0,255,255)
+	r3.tb:SetFontHeight(20)
+	r3:Handle("OnTouchDown", selectButton3)
+	r3:Handle("OnTouchUp", deselectButton3)
+	r3:EnableInput(true)
+	r3:Show()
 end
 main()
