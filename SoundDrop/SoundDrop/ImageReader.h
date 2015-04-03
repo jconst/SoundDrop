@@ -9,6 +9,9 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
+// This class is just an Objective-C wrapper for OpenCVImageReader
+// so it can be referenced from Swift
+
 @interface ImageReader : NSObject
 
 /// @return NSArray of CGPoints wrapped in NSValues

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F0607EAC1ACE25910079EA3D /* ImageReader.mm in Sources */ = {isa = PBXBuildFile; fileRef = F0607EAB1ACE25910079EA3D /* ImageReader.mm */; };
 		F060FFC31AC373DC008F79C9 /* libpd-ios.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F060FFBE1AC373A6008F79C9 /* libpd-ios.a */; };
 		F060FFC51AC373E5008F79C9 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F060FFC41AC373E5008F79C9 /* AudioToolbox.framework */; };
 		F060FFC81AC374D2008F79C9 /* bounce.pd in Resources */ = {isa = PBXBuildFile; fileRef = F060FFC71AC374D2008F79C9 /* bounce.pd */; };
@@ -31,7 +32,6 @@
 		F0EEB7721AB8D84500149986 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F0EEB7681AB8D84500149986 /* QuartzCore.framework */; };
 		F0EEB7731AB8D84500149986 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F0EEB7691AB8D84500149986 /* UIKit.framework */; };
 		F0EEB7761AB8D91F00149986 /* opencv2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F0EEB7751AB8D91F00149986 /* opencv2.framework */; };
-		F0EEB77F1ABB2EA800149986 /* ImageReader.mm in Sources */ = {isa = PBXBuildFile; fileRef = F0EEB77E1ABB2EA800149986 /* ImageReader.mm */; };
 		F0EEB7821ABB2FEB00149986 /* OpenCVImageReader.mm in Sources */ = {isa = PBXBuildFile; fileRef = F0EEB7801ABB2FEB00149986 /* OpenCVImageReader.mm */; };
 		F0EEB7841ABB369400149986 /* testImage.png in Resources */ = {isa = PBXBuildFile; fileRef = F0EEB7831ABB369400149986 /* testImage.png */; };
 		F0EEB7881ABB6F5D00149986 /* Globals.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0EEB7871ABB6F5D00149986 /* Globals.swift */; };
@@ -63,6 +63,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		F0607EAA1ACE25910079EA3D /* ImageReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageReader.h; sourceTree = "<group>"; };
+		F0607EAB1ACE25910079EA3D /* ImageReader.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ImageReader.mm; sourceTree = "<group>"; };
 		F060FFB81AC373A6008F79C9 /* libpd.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = libpd.xcodeproj; path = libpd/libpd.xcodeproj; sourceTree = "<group>"; };
 		F060FFC41AC373E5008F79C9 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		F060FFC71AC374D2008F79C9 /* bounce.pd */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = bounce.pd; path = ../../bounce.pd; sourceTree = "<group>"; };
@@ -91,10 +93,8 @@
 		F0EEB7681AB8D84500149986 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		F0EEB7691AB8D84500149986 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		F0EEB7751AB8D91F00149986 /* opencv2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = opencv2.framework; sourceTree = "<group>"; };
-		F0EEB77D1ABB2EA800149986 /* ImageReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageReader.h; sourceTree = "<group>"; };
-		F0EEB77E1ABB2EA800149986 /* ImageReader.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ImageReader.mm; sourceTree = "<group>"; };
 		F0EEB7801ABB2FEB00149986 /* OpenCVImageReader.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = OpenCVImageReader.mm; sourceTree = "<group>"; };
-		F0EEB7811ABB2FEB00149986 /* OpenCVImageReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpenCVImageReader.h; sourceTree = "<group>"; };
+		F0EEB7811ABB2FEB00149986 /* OpenCVImageReader.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 4; path = OpenCVImageReader.h; sourceTree = "<group>"; };
 		F0EEB7831ABB369400149986 /* testImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = testImage.png; sourceTree = "<group>"; };
 		F0EEB7871ABB6F5D00149986 /* Globals.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Globals.swift; sourceTree = "<group>"; };
 		F0EEB7891ABB719A00149986 /* Helpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Helpers.swift; sourceTree = "<group>"; };
@@ -221,8 +221,8 @@
 			children = (
 				F0EEB7811ABB2FEB00149986 /* OpenCVImageReader.h */,
 				F0EEB7801ABB2FEB00149986 /* OpenCVImageReader.mm */,
-				F0EEB77D1ABB2EA800149986 /* ImageReader.h */,
-				F0EEB77E1ABB2EA800149986 /* ImageReader.mm */,
+				F0607EAA1ACE25910079EA3D /* ImageReader.h */,
+				F0607EAB1ACE25910079EA3D /* ImageReader.mm */,
 			);
 			name = "Computer Vision Code";
 			sourceTree = "<group>";
@@ -347,12 +347,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				F0EEB7821ABB2FEB00149986 /* OpenCVImageReader.mm in Sources */,
+				F0607EAC1ACE25910079EA3D /* ImageReader.mm in Sources */,
 				F0EEB78A1ABB719A00149986 /* Helpers.swift in Sources */,
 				F0EEB72C1AB6882600149986 /* GameScene.swift in Sources */,
 				F0EEB7881ABB6F5D00149986 /* Globals.swift in Sources */,
 				F0EEB72E1AB6882600149986 /* GameViewController.swift in Sources */,
 				F060FFCC1AC378E8008F79C9 /* SoundManager.m in Sources */,
-				F0EEB77F1ABB2EA800149986 /* ImageReader.mm in Sources */,
 				F0EEB7281AB6882600149986 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

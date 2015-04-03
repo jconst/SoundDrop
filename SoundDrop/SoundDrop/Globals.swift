@@ -7,4 +7,8 @@
 //
 
 var lineLocations = Array<CGPoint>()
+var lineRotations = Array<CGFloat>()
 let soundManager = SoundManager()
+
+let snapshotInterval = 0.2
+let flashMaxJump = CGFloat(0.5) // from 0 to 1 where 1 is a jump across the whole screen

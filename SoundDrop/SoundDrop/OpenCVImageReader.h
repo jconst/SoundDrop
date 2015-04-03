@@ -11,14 +11,19 @@
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
-#include <iostream>
+#include <vector>
 #include <opencv2/core/core.hpp>
 
 using namespace cv;
 using namespace std;
 
 // "Public" interface
-vector<Point2f> flashesInImage(Mat &img);
+
+/// @return NSArray of CGPoints wrapped in NSValues
+/// points are normalized from 0 to 1
+NSArray *flashPointsInImage(UIImage *image);
+
+vector<Point2f> flashPointsInImage(Mat &img);
 
 CGPoint cgPointFromPoint2f(Point2f pt);
 Mat cvMatFromUIImage(UIImage *image);

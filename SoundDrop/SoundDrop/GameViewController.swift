@@ -101,7 +101,7 @@ class GameViewController: UIViewController
         camLayer.transform = CATransform3DMakeAffineTransform(CGAffineTransformMakeRotation(-CGFloat(M_PI)/2.0))
         
         camLayer.frame = self.view.bounds
-        camLayer.videoGravity = AVLayerVideoGravityResizeAspect
+        camLayer.videoGravity = AVLayerVideoGravityResizeAspectFill
         
         self.camView.layer.addSublayer(camLayer)
         captureSession.startRunning()
@@ -119,8 +119,6 @@ class GameViewController: UIViewController
                     if port.mediaType == AVMediaTypeVideo {
                         if let s = conn as? AVCaptureConnection {
                             self.videoConnection = s
-
-                            
                             return true
                         }
                     }
@@ -132,22 +130,15 @@ class GameViewController: UIViewController
     }
 
     func setupSnapshotTimer() {
-        NSTimer.scheduledTimerWithTimeInterval(0.2, target: self, selector:"takeSnapshot", userInfo:nil, repeats:true)
+        NSTimer.scheduledTimerWithTimeInterval(snapshotInterval, target: self, selector:"takeSnapshot", userInfo:nil, repeats:true)
     }
-    
-    func detectLines(img: UIImage) {
-        let points = imgReader.flashesInImage(img).map {(val) -> CGPoint in
-            val.CGPointValue()
-        }
-        lineLocations = points
-    }
-    
+
     func takeSnapshot() {
         if self.videoConnection == nil && !self.findVideoConnection() {
             return
         }
         
-        self.capture.captureStillImageAsynchronouslyFromConnection(self.videoConnection, completionHandler: { (cmb: CMSampleBuffer!, err) -> Void in
+        self.capture.captureStillImageAsynchronouslyFromConnection(self.videoConnection) { (cmb: CMSampleBuffer!, err) -> Void in
             
             if cmb == nil || err != nil {
                 NSLog("Error capturing image.", err)
@@ -162,9 +153,38 @@ class GameViewController: UIViewController
                     self.detectLines(img)
                 }
             }
-        })
+        }
     }
-
+    
+    func detectLines(img: UIImage) {
+        let flashes = imgReader.flashesInImage(img)
+            .map { val -> CGPoint in
+                val.CGPointValue()
+            }
+        lineLocations = lineLocations
+            .map {
+                return self.findClosestFlash(flashes, maxJump: flashMaxJump, point: $0)
+            }
+    }
+    
+    func findClosestFlash(flashes: Array<CGPoint>, maxJump: CGFloat, point: CGPoint) -> CGPoint {
+        if flashes.count == 0 {
+            return point
+        }
+        return flashes[0]
+        // TODO: If this algorithm isn't satisfactory, try using some heuristic
+        // combination of flash size as well as closeness to the point
+//        let closest: CGPoint = flashes.reduce(flashes[0]) { (best, cur) in
+//            let bestDist = distanceBetween(best, point)
+//            let curDist = distanceBetween(cur, point)
+//            return curDist < bestDist ? cur : best
+//        }
+//        if distanceBetween(closest, point) > maxJump {
+//            return point
+//        }
+//        return lerp(point, closest, 0.5)
+    }
+    
     override func shouldAutorotate() -> Bool {
         return false
     }

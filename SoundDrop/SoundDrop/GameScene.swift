@@ -58,16 +58,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
         for touch: AnyObject in touches {
             let location = touch.locationInNode(self)
-            // Temperarily set rotation as random number
-            let randomFloat = Float(arc4random()) / Float(UINT32_MAX)
-            let rotation = (Double(randomFloat) * 2.0 * M_PI) + M_PI
-            lineBumpers.append(createLineBumper(location, rotation: CGFloat(rotation), width: 100))
+            lineLocations.append(normalizeScreenPoint(location))
+            lineBumpers.append(createLineBumper(location, rotation: 0, width: 100))
         }
     }
     
     func createLineBumper(location: CGPoint, rotation: CGFloat, width: CGFloat) -> SKSpriteNode {
         let bumper = SKSpriteNode(color: UIColor.whiteColor(), size: CGSizeMake(100, 10))
         
+        bumper.position = location
         updateLineBumper(bumper, location: location, rotation: rotation)
         
         bumper.physicsBody = SKPhysicsBody(rectangleOfSize:bumper.frame.size)
@@ -82,25 +81,38 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func updateLineBumper(bumper: SKSpriteNode, location: CGPoint, rotation: CGFloat? = nil) {
-        bumper.position = location
+        let move = SKAction.moveTo(location, duration: snapshotInterval)
+        bumper.runAction(move)
         if let rot = rotation {
             let lastRotation = bumper.zRotation
-            let rotate = SKAction.rotateByAngle(CGFloat(rot - lastRotation), duration: 0)
+            let rotate = SKAction.rotateByAngle(CGFloat(rot - lastRotation), duration: snapshotInterval)
             bumper.runAction(rotate)
         }
     }
    
     override func update(currentTime: CFTimeInterval) {
-
         for (i, loc) in enumerate(lineLocations) {
             if lineBumpers.count <= i {
                 break
             }
             let bumper = lineBumpers[i]
-            updateLineBumper(bumper, location: loc)
+            //TODO: update rotation as well
+            updateLineBumper(bumper, location: scaleNormPointToScreen(loc))
         }
     }
+    
+    func normalizeScreenPoint(pt: CGPoint) -> CGPoint {
+        let p = CGPoint(x: pt.x / self.size.width,
+                        y: pt.y / self.size.height);
+        return p
+    }
 
+    func scaleNormPointToScreen(pt: CGPoint) -> CGPoint {
+        let p = CGPoint(x: pt.x * self.size.width,
+                        y: pt.y * self.size.height);
+        return p
+    }
+    
     func didBeginContact(contact: SKPhysicsContact) {
         soundManager.playBounceWithContactSpeed(Double(contact.collisionImpulse))
     }

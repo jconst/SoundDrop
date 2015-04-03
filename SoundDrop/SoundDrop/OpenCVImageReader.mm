@@ -22,7 +22,7 @@ using namespace std;
 
 Mat curFrame, lastFrame, curGray, diff, threshed, blurred;
 
-int numLights = 1;
+int numLights = 5; //return the 5 largest objects
 int minArea = 1;
 int maxArea = 1000;
 
@@ -35,9 +35,9 @@ vector<Vec4i> hierarchy;
 
 CGPoint cgPointFromPoint2f(Point2f pt)
 {
-    CGSize screen = [[UIScreen mainScreen] bounds].size;
-    screen = CGSizeMake(screen.width * 2.0, screen.height * 2.0);
-    return CGPointMake((pt.x * (screen.width/192.0))+100, (192.0-pt.y) * (screen.height/144.0));
+    //TODO: dont use hardcoded mapping
+    CGPoint point = CGPointMake(pt.x/144.0, 1.0-(pt.y/192.0));
+    return point;
 }
 
 Mat cvMatFromUIImage(UIImage *image)
@@ -100,7 +100,18 @@ UIImage *uiImageFromCVMat(Mat cvMat)
     return finalImage;
 }
 
-vector<Point2f> flashesInImage(Mat &curFrame)
+NSArray *flashPointsInImage(UIImage *image)
+{
+    Mat mat = cvMatFromUIImage(image);
+    vector<Point2f> points = flashPointsInImage(mat);
+    NSMutableArray *ret = [NSMutableArray new];
+    for (Point2f pt : points) {
+        [ret addObject:[NSValue valueWithCGPoint:cgPointFromPoint2f(pt)]];
+    }
+    return ret;
+}
+
+vector<Point2f> flashPointsInImage(Mat &curFrame)
 {
     if (lastFrame.empty()) {
         cvtColor(curFrame, curGray, COLOR_BGR2GRAY);
@@ -131,9 +142,8 @@ vector<Point2f> flashesInImage(Mat &curFrame)
         if (mts.m00 == 0)
             continue;
         lightPoints[i] = Point2f(mts.m10/mts.m00, mts.m01/mts.m00);
-        cout << i << "th biggest contour at x:" << lightPoints[i].x
-             << " y:" << lightPoints[i].y << " has area "
-             << contourArea(contours[i]) << endl;
+        if (i == 0)
+            NSLog(@"biggest contour: %@", NSStringFromCGPoint(cgPointFromPoint2f(lightPoints[i])));
     }
     
     lastFrame = curGray.clone();
@@ -147,5 +157,5 @@ void diffImages(Mat &cur, Mat &last, Mat &dest)
     
     GaussianBlur(diff, blurred, cv::Size(3,3), 0, 0);
     
-    inRange(blurred, Scalar(200), Scalar(255), dest);
+    inRange(blurred, Scalar(175), Scalar(255), dest);
 }
