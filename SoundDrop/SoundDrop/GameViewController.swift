@@ -26,7 +26,7 @@ extension SKNode {
     }
 }
 
-class GameViewController: UIViewController
+class GameViewController: UIViewController, NSNetServiceBrowserDelegate
 {
     let captureSession = AVCaptureSession()
     var captureDevice : AVCaptureDevice?
@@ -76,30 +76,33 @@ class GameViewController: UIViewController
         print(msg)
     }
     
+    func netServiceBrowser(aNetServiceBrowser: NSNetServiceBrowser, didFindService aNetService: NSNetService, moreComing: Bool) {
+        NSLog("Hi")
+    }
+    
+    func netServiceBrowser(aNetServiceBrowser: NSNetServiceBrowser, didNotSearch errorDict: [NSObject : AnyObject]) {
+        NSLog("fwe")
+    }
+    
     func setUpOSC() {
         self.oscManager.setDelegate(self)
-        let inPort = self.oscManager.createNewInputForPort(8888, withLabel: "SoundDrop")
-        let outPort = self.oscManager.createNewOutputToAddress("127.0.0.1", atPort: 8888)
-        // not working yet :(
-        self.externalPort = self.oscManager.findOutputWithAddress("192.168.1.110", andPort: 8888)
-//        self.externalPort = self.oscManager.findOutputWithLabel("SoundDropSlave")
-        
-//        let addressSpace = OSCAddressSpace.mainAddressSpace() as OSCAddressSpace!
-//        let listenNode = addressSpace.findNodeForAddress("/FrequencyUpdate/Push", createIfMissing: true)
-        
+        let inPort = self.oscManager.createNewInputForPort(8888)
         inPort.setDelegate(self)
+        let outPort = self.oscManager.createNewOutputToAddress("127.0.0.1", atPort: 8888)
+        self.externalPort = OSCOutPort(address: "192.168.1.110", andPort: 8888)
         
-        outPort.sendThisMessage(OSCMessage(address: "/FrequencyUpdate/Push"))
-        
-        NSTimer.scheduledTimerWithTimeInterval(0.1, target: self, selector: "sendToPhones:", userInfo: nil, repeats: true)
+        NSTimer.scheduledTimerWithTimeInterval(0.5, target: self, selector: "sendToPhones:", userInfo: nil, repeats: true)
     }
     
     func sendToPhones(time: NSTimer) {
         var uuid: CFUUIDRef = CFUUIDCreate(nil)
         var nonce: CFStringRef = CFUUIDCreateString(nil, uuid)
-        self.externalPort?.sendThisMessage(OSCMessage(address: nonce))
+        let msg = OSCMessage(address: "/urMus/text")
+        msg.addString(String(Int(arc4random_uniform(781)) + 220) + ", " + String(Int(arc4random_uniform(781)) + 220))
+        
+        self.externalPort?.sendThisMessage(msg)
         if self.externalPort == nil {
-            self.externalPort = self.oscManager.findOutputWithAddress("192.168.1.110", andPort: 8888)
+            self.externalPort = OSCOutPort(address: "192.168.1.110", andPort: 8888)
         }
     }
     

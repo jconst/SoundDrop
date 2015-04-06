@@ -3,6 +3,21 @@ FreeAllFlowboxes()
 
 local log = math.log
 
+function string:split( inSplitPattern, outResults )
+  if not outResults then
+    outResults = { }
+  end
+  local theStart = 1
+  local theSplitStart, theSplitEnd = string.find( self, inSplitPattern, theStart )
+  while theSplitStart do
+    table.insert( outResults, string.sub( self, theStart, theSplitStart-1 ) )
+    theStart = theSplitEnd + 1
+    theSplitStart, theSplitEnd = string.find( self, inSplitPattern, theStart )
+  end
+  table.insert( outResults, string.sub( self, theStart ) )
+  return outResults
+end
+
 function freq2norm(freq)
 	return 12.0/96.0*log(freq/55)/log(2)
 end
@@ -67,12 +82,24 @@ function lookForSoundDropServer()
 	StartNetDiscovery("SoundDrop")
 end
 
-function gotOSC(self, num, flashFrequency)
-	DPrint("OSC: ".. num.." "..flashFrequency)
-	currentfrequency = freq2norm(num)
+function gotOSC(self, numbers)
+	DPrint("Got OSC Message: " .. numbers)
+
+	local numStrings = numbers:split(", ")
+	local nums = {}
+
+	for i = 1, #numStrings do
+	   nums[i] = tonumber(numStrings[i])
+	end
+
+	if #nums < 2 then
+		return false
+	end
+
+	currentfrequency = freq2norm(nums[1])
 	push:Push(currentfrequency)
 	trigger:Push(1)
-	--SetTorchFlashFrequency(flashFrequency)
+	--SetTorchFlashFrequency(nums[2])
 end
 
 function selectButton()
@@ -80,7 +107,7 @@ function selectButton()
 	--in the future replace random with frequency we want to send
 	--now it sends to itself
 	--also can send rotation data to master piece
-	SendOSCMessage(host,8888,"/urMus/numbers",math.random(220,1000),math.random(220,1000))
+	-- SendOSCMessage(host,8888,"/urMus/numbers",math.random(220,1000),math.random(220,1000))
 end
 
 --now sound pulse time is constrained by deselect button
@@ -110,8 +137,8 @@ function accel(self, x, y, z)
 end
 
 function selectButton4()
-	--SendOSCMessage(host,8888,"/urMus/numbers",math.random(220,1000),math.random(220,1000))
-	DPrint(data_x)
+	SendOSCMessage("192.168.1.111",8888,"/urMus/numbers",math.random(220,1000),math.random(220,1000))
+	-- DPrint(data_x)
 end
 
 
@@ -129,7 +156,7 @@ function genclock(self,elapsed)
 	if(tick==5) then
 		--send data
 		--SendOSCMessage(host,8888,"/urMus/numbers",math.random(220,1000),math.random(220,1000))
-		DPrint("data_x:"..data_x)
+		-- DPrint("data_x:"..data_x)
 	end
 end
 
