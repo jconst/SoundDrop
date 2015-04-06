@@ -10,12 +10,13 @@ end
 function main()
 	createFlowboxes()
 	createButtons()
+	lookForSoundDropServer()
 end
 
 function createFlowboxes()
 
 	currentfrequency = freq2norm(800)
-	
+
 --flowboxes
 	sinosc = FlowBox(FBSinOsc)
 	dac = FlowBox(FBDac)
@@ -32,7 +33,7 @@ function createFlowboxes()
 	snare = FlowBox(FBSample)
 	snare:AddFile("snare.wav")
 	snare_trigger = FlowBox(FBPush)
-	
+
 --links
 	dac.In:SetPull(sinosc.Out)
 	dac.In:SetPull(kick.Out)
@@ -46,7 +47,7 @@ function createFlowboxes()
 	sinosc.Amp:SetPull(adsr.Out)
 	kick_trigger.Out:SetPush(kick.Amp)
 	snare_trigger.Out:SetPush(snare.Amp)
-	
+
 	push:Push(currentfrequency)
 	kick_trigger:Push(0)
 	snare_trigger:Push(0)
@@ -56,6 +57,14 @@ function createFlowboxes()
 	decay:Push(1)
 	sustain:Push(0.8)
 	release:Push(0.00002)
+end
+
+function foundSoundDropServer(region, hostname)
+	DPrint(hostname)
+end
+
+function lookForSoundDropServer()
+	StartNetDiscovery("SoundDrop")
 end
 
 function gotOSC(self, num, flashFrequency)
@@ -94,7 +103,7 @@ function deselectButton3()
 	snare_trigger:Push(0)
 end
 
-data_x = 0;
+data_x = 0
 function accel(self, x, y, z)
 	--DPrint(x) --rotation
 	data_x = x
@@ -139,6 +148,7 @@ function createButtons()
 	r:Handle("OnTouchDown", selectButton)
 	r:Handle("OnTouchUp", deselectButton)
 	r:Handle("OnOSCMessage",gotOSC)
+	r:Handle("OnNetConnect", foundSoundDropServer)
 	--don't have rotation info handler
 	--the closest one is OnHeading
 	--r:Handle("OnHeading",heading)
@@ -149,7 +159,11 @@ function createButtons()
 	host,port = StartOSCListener()
 	r:EnableInput(true)
 	r:Show()
-	
+
+	DPrint(host)
+
+	StartNetAdvertise("SoundDropSlave", 8888)
+
 	r2 = Region()
 	r2:SetWidth(ScreenWidth()/2)
 	r2:SetHeight(ScreenHeight()/4)
@@ -163,7 +177,7 @@ function createButtons()
 	r2:Handle("OnTouchUp", deselectButton2)
 	r2:EnableInput(true)
 	r2:Show()
-	
+
 	r3 = Region()
 	r3:SetWidth(ScreenWidth()/2)
 	r3:SetHeight(ScreenHeight()/4)
@@ -177,7 +191,7 @@ function createButtons()
 	r3:Handle("OnTouchUp", deselectButton3)
 	r3:EnableInput(true)
 	r3:Show()
-	
+
 	r4 = Region()
 	r4:SetWidth(ScreenWidth()/2)
 	r4:SetHeight(ScreenHeight()/4)

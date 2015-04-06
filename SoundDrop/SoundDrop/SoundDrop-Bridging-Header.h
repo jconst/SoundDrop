@@ -4,3 +4,4 @@
 
 #import "ImageReader.h"
 #import "SoundManager.h"
+#import <VVOSC/VVOSC.h>

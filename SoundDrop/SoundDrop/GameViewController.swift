@@ -32,6 +32,10 @@ class GameViewController: UIViewController
     var captureDevice : AVCaptureDevice?
     let imgReader: ImageReader
     
+    let oscManager = OSCManager(serviceType: "")
+    
+    var externalPort: OSCOutPort?
+    
     @IBOutlet var skView: SKView!
     @IBOutlet var camView: UIView!
     
@@ -63,6 +67,39 @@ class GameViewController: UIViewController
             
             self.setUpSession()
             self.setupSnapshotTimer()
+            
+            self.setUpOSC()
+        }
+    }
+    
+    func receivedOSCMessage(msg: OSCMessage) {
+        print(msg)
+    }
+    
+    func setUpOSC() {
+        self.oscManager.setDelegate(self)
+        let inPort = self.oscManager.createNewInputForPort(8888, withLabel: "SoundDrop")
+        let outPort = self.oscManager.createNewOutputToAddress("127.0.0.1", atPort: 8888)
+        // not working yet :(
+        self.externalPort = self.oscManager.findOutputWithAddress("192.168.1.110", andPort: 8888)
+//        self.externalPort = self.oscManager.findOutputWithLabel("SoundDropSlave")
+        
+//        let addressSpace = OSCAddressSpace.mainAddressSpace() as OSCAddressSpace!
+//        let listenNode = addressSpace.findNodeForAddress("/FrequencyUpdate/Push", createIfMissing: true)
+        
+        inPort.setDelegate(self)
+        
+        outPort.sendThisMessage(OSCMessage(address: "/FrequencyUpdate/Push"))
+        
+        NSTimer.scheduledTimerWithTimeInterval(0.1, target: self, selector: "sendToPhones:", userInfo: nil, repeats: true)
+    }
+    
+    func sendToPhones(time: NSTimer) {
+        var uuid: CFUUIDRef = CFUUIDCreate(nil)
+        var nonce: CFStringRef = CFUUIDCreateString(nil, uuid)
+        self.externalPort?.sendThisMessage(OSCMessage(address: nonce))
+        if self.externalPort == nil {
+            self.externalPort = self.oscManager.findOutputWithAddress("192.168.1.110", andPort: 8888)
         }
     }
     

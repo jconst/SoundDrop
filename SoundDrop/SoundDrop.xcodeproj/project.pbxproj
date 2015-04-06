@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C163AC291AD21650006AD273 /* libVVBasics.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C163AC181AD215FD006AD273 /* libVVBasics.a */; };
+		C163AC2A1AD21650006AD273 /* libVVOSC.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C163AC1A1AD215FD006AD273 /* libVVOSC.a */; };
 		F0607EAC1ACE25910079EA3D /* ImageReader.mm in Sources */ = {isa = PBXBuildFile; fileRef = F0607EAB1ACE25910079EA3D /* ImageReader.mm */; };
 		F060FFC31AC373DC008F79C9 /* libpd-ios.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F060FFBE1AC373A6008F79C9 /* libpd-ios.a */; };
 		F060FFC51AC373E5008F79C9 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F060FFC41AC373E5008F79C9 /* AudioToolbox.framework */; };
@@ -39,6 +41,167 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		C163ABFB1AD215FD006AD273 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C163ABDE1AD215FC006AD273 /* VVOpenSource.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 961EA8ED100E8565007E6C25;
+			remoteInfo = VVBasics;
+		};
+		C163ABFD1AD215FD006AD273 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C163ABDE1AD215FC006AD273 /* VVOpenSource.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 96C8073A19817C1600FA7825;
+			remoteInfo = VVBufferPool;
+		};
+		C163ABFF1AD215FD006AD273 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C163ABDE1AD215FC006AD273 /* VVOpenSource.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 96C8071219817BFE00FA7825;
+			remoteInfo = DDMathParser;
+		};
+		C163AC011AD215FD006AD273 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C163ABDE1AD215FC006AD273 /* VVOpenSource.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 96C8072619817C0A00FA7825;
+			remoteInfo = JSONKit;
+		};
+		C163AC031AD215FD006AD273 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C163ABDE1AD215FC006AD273 /* VVOpenSource.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 964FF27D1981B5AF00CCC808;
+			remoteInfo = VVISFKit;
+		};
+		C163AC051AD215FD006AD273 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C163ABDE1AD215FC006AD273 /* VVOpenSource.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 96B06C1C18BE0ECF000A921C;
+			remoteInfo = VVUIToolbox;
+		};
+		C163AC071AD215FD006AD273 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C163ABDE1AD215FC006AD273 /* VVOpenSource.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 961745F4100F86B400FB60E6;
+			remoteInfo = VVMIDI;
+		};
+		C163AC091AD215FD006AD273 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C163ABDE1AD215FC006AD273 /* VVOpenSource.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 9628D0C5100E89F700C3944E;
+			remoteInfo = VVOSC;
+		};
+		C163AC0B1AD215FD006AD273 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C163ABDE1AD215FC006AD273 /* VVOpenSource.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 968FAA86108B6141000E470D;
+			remoteInfo = CrashReporterTestApp;
+		};
+		C163AC0D1AD215FD006AD273 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C163ABDE1AD215FC006AD273 /* VVOpenSource.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 9656D900100F89BA0064EEA6;
+			remoteInfo = MIDITestApp;
+		};
+		C163AC0F1AD215FD006AD273 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C163ABDE1AD215FC006AD273 /* VVOpenSource.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 9628D179100E8B4D00C3944E;
+			remoteInfo = OSCTestApp;
+		};
+		C163AC111AD215FD006AD273 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C163ABDE1AD215FC006AD273 /* VVOpenSource.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 96B49302106AEB4C008FB26E;
+			remoteInfo = MIDIviaOSC;
+		};
+		C163AC131AD215FD006AD273 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C163ABDE1AD215FC006AD273 /* VVOpenSource.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 966CCBD81431EFB9006D580F;
+			remoteInfo = OSCQueryTest;
+		};
+		C163AC151AD215FD006AD273 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C163ABDE1AD215FC006AD273 /* VVOpenSource.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 96ACD7211706416300138AE6;
+			remoteInfo = OSCPingTester;
+		};
+		C163AC171AD215FD006AD273 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C163ABDE1AD215FC006AD273 /* VVOpenSource.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 96C18C2D185A1A740082DE35;
+			remoteInfo = VVBasicsStatic;
+		};
+		C163AC191AD215FD006AD273 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C163ABDE1AD215FC006AD273 /* VVOpenSource.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 96C18C3E185A1A7D0082DE35;
+			remoteInfo = VVOSCStatic;
+		};
+		C163AC1B1AD215FD006AD273 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C163ABDE1AD215FC006AD273 /* VVOpenSource.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 1A6F726619033A9D00A6FBAD;
+			remoteInfo = VVUIToolboxStatic;
+		};
+		C163AC1D1AD215FD006AD273 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C163ABDE1AD215FC006AD273 /* VVOpenSource.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 965C1CAC1983BE7D00111741;
+			remoteInfo = "GLScene Test App";
+		};
+		C163AC1F1AD215FD006AD273 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C163ABDE1AD215FC006AD273 /* VVOpenSource.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 965C1CC71983BE9A00111741;
+			remoteInfo = "QCGLScene Test App";
+		};
+		C163AC211AD215FD006AD273 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C163ABDE1AD215FC006AD273 /* VVOpenSource.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 965C1CE21983BEA200111741;
+			remoteInfo = "CIGLScene Test App";
+		};
+		C163AC231AD215FD006AD273 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C163ABDE1AD215FC006AD273 /* VVOpenSource.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 965C1CFD198403C300111741;
+			remoteInfo = "ISFGLScene Test App";
+		};
+		C163AC251AD215FD006AD273 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C163ABDE1AD215FC006AD273 /* VVOpenSource.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 96140109198AD46D00335292;
+			remoteInfo = "QT and Hap Test App";
+		};
+		C163AC271AD21635006AD273 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C163ABDE1AD215FC006AD273 /* VVOpenSource.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 968A7EEB185BA3100075DEB1;
+			remoteInfo = "Build iOS static libs";
+		};
 		F060FFBD1AC373A6008F79C9 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = F060FFB81AC373A6008F79C9 /* libpd.xcodeproj */;
@@ -63,6 +226,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		C163ABDE1AD215FC006AD273 /* VVOpenSource.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = VVOpenSource.xcodeproj; path = vvopensource/VVOpenSource.xcodeproj; sourceTree = "<group>"; };
 		F0607EAA1ACE25910079EA3D /* ImageReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageReader.h; sourceTree = "<group>"; };
 		F0607EAB1ACE25910079EA3D /* ImageReader.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ImageReader.mm; sourceTree = "<group>"; };
 		F060FFB81AC373A6008F79C9 /* libpd.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = libpd.xcodeproj; path = libpd/libpd.xcodeproj; sourceTree = "<group>"; };
@@ -105,6 +269,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C163AC291AD21650006AD273 /* libVVBasics.a in Frameworks */,
+				C163AC2A1AD21650006AD273 /* libVVOSC.a in Frameworks */,
 				F060FFC31AC373DC008F79C9 /* libpd-ios.a in Frameworks */,
 				F0EEB76A1AB8D84500149986 /* Accelerate.framework in Frameworks */,
 				F0EEB76B1AB8D84500149986 /* AssetsLibrary.framework in Frameworks */,
@@ -124,6 +290,35 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		C163ABDF1AD215FC006AD273 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				C163ABFC1AD215FD006AD273 /* VVBasics.framework */,
+				C163ABFE1AD215FD006AD273 /* VVBufferPool.framework */,
+				C163AC001AD215FD006AD273 /* DDMathParser.framework */,
+				C163AC021AD215FD006AD273 /* JSONKit.framework */,
+				C163AC041AD215FD006AD273 /* VVISFKit.framework */,
+				C163AC061AD215FD006AD273 /* VVUIToolbox.framework */,
+				C163AC081AD215FD006AD273 /* VVMIDI.framework */,
+				C163AC0A1AD215FD006AD273 /* VVOSC.framework */,
+				C163AC0C1AD215FD006AD273 /* CrashReporterTestApp.app */,
+				C163AC0E1AD215FD006AD273 /* MIDITestApp.app */,
+				C163AC101AD215FD006AD273 /* OSCTestApp.app */,
+				C163AC121AD215FD006AD273 /* MIDIviaOSC.app */,
+				C163AC141AD215FD006AD273 /* OSCQueryTest.app */,
+				C163AC161AD215FD006AD273 /* OSCPingTester.app */,
+				C163AC181AD215FD006AD273 /* libVVBasics.a */,
+				C163AC1A1AD215FD006AD273 /* libVVOSC.a */,
+				C163AC1C1AD215FD006AD273 /* libVVUIToolbox.a */,
+				C163AC1E1AD215FD006AD273 /* GLScene Test App.app */,
+				C163AC201AD215FD006AD273 /* QCGLScene Test App.app */,
+				C163AC221AD215FD006AD273 /* CIGLScene Test App.app */,
+				C163AC241AD215FD006AD273 /* ISFGLScene Test App.app */,
+				C163AC261AD215FD006AD273 /* QT and Hap Test App.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		F060FFB91AC373A6008F79C9 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -147,6 +342,7 @@
 		F0EEB7191AB6882600149986 = {
 			isa = PBXGroup;
 			children = (
+				C163ABDE1AD215FC006AD273 /* VVOpenSource.xcodeproj */,
 				F060FFB81AC373A6008F79C9 /* libpd.xcodeproj */,
 				F0EEB7241AB6882600149986 /* SoundDrop */,
 				F0EEB7231AB6882600149986 /* Products */,
@@ -260,6 +456,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				C163AC281AD21635006AD273 /* PBXTargetDependency */,
 				F060FFC21AC373CF008F79C9 /* PBXTargetDependency */,
 			);
 			name = SoundDrop;
@@ -298,6 +495,10 @@
 					ProductGroup = F060FFB91AC373A6008F79C9 /* Products */;
 					ProjectRef = F060FFB81AC373A6008F79C9 /* libpd.xcodeproj */;
 				},
+				{
+					ProductGroup = C163ABDF1AD215FC006AD273 /* Products */;
+					ProjectRef = C163ABDE1AD215FC006AD273 /* VVOpenSource.xcodeproj */;
+				},
 			);
 			projectRoot = "";
 			targets = (
@@ -307,6 +508,160 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
+		C163ABFC1AD215FD006AD273 /* VVBasics.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = VVBasics.framework;
+			remoteRef = C163ABFB1AD215FD006AD273 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		C163ABFE1AD215FD006AD273 /* VVBufferPool.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = VVBufferPool.framework;
+			remoteRef = C163ABFD1AD215FD006AD273 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		C163AC001AD215FD006AD273 /* DDMathParser.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = DDMathParser.framework;
+			remoteRef = C163ABFF1AD215FD006AD273 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		C163AC021AD215FD006AD273 /* JSONKit.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = JSONKit.framework;
+			remoteRef = C163AC011AD215FD006AD273 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		C163AC041AD215FD006AD273 /* VVISFKit.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = VVISFKit.framework;
+			remoteRef = C163AC031AD215FD006AD273 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		C163AC061AD215FD006AD273 /* VVUIToolbox.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = VVUIToolbox.framework;
+			remoteRef = C163AC051AD215FD006AD273 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		C163AC081AD215FD006AD273 /* VVMIDI.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = VVMIDI.framework;
+			remoteRef = C163AC071AD215FD006AD273 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		C163AC0A1AD215FD006AD273 /* VVOSC.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = VVOSC.framework;
+			remoteRef = C163AC091AD215FD006AD273 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		C163AC0C1AD215FD006AD273 /* CrashReporterTestApp.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = CrashReporterTestApp.app;
+			remoteRef = C163AC0B1AD215FD006AD273 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		C163AC0E1AD215FD006AD273 /* MIDITestApp.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = MIDITestApp.app;
+			remoteRef = C163AC0D1AD215FD006AD273 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		C163AC101AD215FD006AD273 /* OSCTestApp.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = OSCTestApp.app;
+			remoteRef = C163AC0F1AD215FD006AD273 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		C163AC121AD215FD006AD273 /* MIDIviaOSC.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = MIDIviaOSC.app;
+			remoteRef = C163AC111AD215FD006AD273 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		C163AC141AD215FD006AD273 /* OSCQueryTest.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = OSCQueryTest.app;
+			remoteRef = C163AC131AD215FD006AD273 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		C163AC161AD215FD006AD273 /* OSCPingTester.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = OSCPingTester.app;
+			remoteRef = C163AC151AD215FD006AD273 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		C163AC181AD215FD006AD273 /* libVVBasics.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libVVBasics.a;
+			remoteRef = C163AC171AD215FD006AD273 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		C163AC1A1AD215FD006AD273 /* libVVOSC.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libVVOSC.a;
+			remoteRef = C163AC191AD215FD006AD273 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		C163AC1C1AD215FD006AD273 /* libVVUIToolbox.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libVVUIToolbox.a;
+			remoteRef = C163AC1B1AD215FD006AD273 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		C163AC1E1AD215FD006AD273 /* GLScene Test App.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = "GLScene Test App.app";
+			remoteRef = C163AC1D1AD215FD006AD273 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		C163AC201AD215FD006AD273 /* QCGLScene Test App.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = "QCGLScene Test App.app";
+			remoteRef = C163AC1F1AD215FD006AD273 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		C163AC221AD215FD006AD273 /* CIGLScene Test App.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = "CIGLScene Test App.app";
+			remoteRef = C163AC211AD215FD006AD273 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		C163AC241AD215FD006AD273 /* ISFGLScene Test App.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = "ISFGLScene Test App.app";
+			remoteRef = C163AC231AD215FD006AD273 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		C163AC261AD215FD006AD273 /* QT and Hap Test App.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = "QT and Hap Test App.app";
+			remoteRef = C163AC251AD215FD006AD273 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		F060FFBE1AC373A6008F79C9 /* libpd-ios.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -360,6 +715,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		C163AC281AD21635006AD273 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "Build iOS static libs";
+			targetProxy = C163AC271AD21635006AD273 /* PBXContainerItemProxy */;
+		};
 		F060FFC21AC373CF008F79C9 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = "libpd-ios";
@@ -480,6 +840,7 @@
 				INFOPLIST_FILE = SoundDrop/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "SoundDrop/SoundDrop-Bridging-Header.h";
@@ -503,6 +864,7 @@
 				INFOPLIST_FILE = SoundDrop/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "SoundDrop/SoundDrop-Bridging-Header.h";
