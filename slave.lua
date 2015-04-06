@@ -94,11 +94,39 @@ function deselectButton3()
 	snare_trigger:Push(0)
 end
 
-function accel(region, x, y, z)
-	DPrint(x) --rotation
+data_x = 0;
+function accel(self, x, y, z)
+	--DPrint(x) --rotation
+	data_x = x
+end
+
+function selectButton4()
+	--SendOSCMessage(host,8888,"/urMus/numbers",math.random(220,1000),math.random(220,1000))
+	DPrint(data_x)
+end
+
+
+function genclock(self,elapsed)
+	if(clock==6) then
+		clock = 0
+		if(tick==5) then
+			tick = 1
+		else
+			tick = tick + 1
+		end
+	else
+		clock = clock + 1
+	end
+	if(tick==5) then
+		--send data
+		--SendOSCMessage(host,8888,"/urMus/numbers",math.random(220,1000),math.random(220,1000))
+		DPrint("data_x:"..data_x)
+	end
 end
 
 function createButtons()
+	clock = 0
+	tick = 0
 	--create a button to send osc message to itself by pressing the button
 	r = Region()
 	r:SetWidth(ScreenWidth()/2)
@@ -116,6 +144,7 @@ function createButtons()
 	--r:Handle("OnHeading",heading)
 	r:Handle("OnRotation", rotate)
 	r:Handle("OnAccelerate", accel)
+	r:Handle("OnUpdate",genclock)
 	SetOSCPort(8888)
 	host,port = StartOSCListener()
 	r:EnableInput(true)
@@ -148,5 +177,19 @@ function createButtons()
 	r3:Handle("OnTouchUp", deselectButton3)
 	r3:EnableInput(true)
 	r3:Show()
+	
+	r4 = Region()
+	r4:SetWidth(ScreenWidth()/2)
+	r4:SetHeight(ScreenHeight()/4)
+	r4:SetAnchor("TOPLEFT",UIParent,"TOPLEFT",ScreenWidth()/2,0)
+	r4.t = r4:Texture(0,0,255,255)
+	r4.tb = r4:TextLabel()
+	r4.tb:SetLabel("send X")
+	r4.tb:SetColor(0,255,0,255)
+	r4.tb:SetFontHeight(20)
+	r4:Handle("OnTouchDown", selectButton4)
+	r4:Handle("OnTouchUp", deselectButton4)
+	r4:EnableInput(true)
+	r4:Show()
 end
 main()
