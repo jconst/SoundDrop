@@ -14,7 +14,9 @@ func distanceBetween(p1: CGPoint, p2: CGPoint) -> CGFloat {
 }
 
 func lerp(p1: CGPoint, p2: CGPoint, fraction: CGFloat) -> CGPoint {
-    let x = p1.x + ((p2.x - p1.x) * fraction)
-    let y = p1.y + ((p2.y - p1.y) * fraction)
-    return CGPoint(x: x, y: y)
+    return CGPoint(x: lerp(p1.x, p2.x, fraction), y: lerp(p1.y, p2.y, fraction))
+}
+
+func lerp(v1: CGFloat, v2: CGFloat, fraction: CGFloat) -> CGFloat {
+    return v1 + ((v2 - v1) * fraction)
 }

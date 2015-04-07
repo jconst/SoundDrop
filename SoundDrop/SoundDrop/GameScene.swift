@@ -58,6 +58,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
         for touch: AnyObject in touches {
             let location = touch.locationInNode(self)
+            lineRotations.append(0)
             lineLocations.append(normalizeScreenPoint(location))
             lineBumpers.append(createLineBumper(location, rotation: 0, width: 100))
         }
@@ -80,14 +81,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         return bumper
     }
     
-    func updateLineBumper(bumper: SKSpriteNode, location: CGPoint, rotation: CGFloat? = nil) {
+    func updateLineBumper(bumper: SKSpriteNode, location: CGPoint, rotation: CGFloat) {
         let move = SKAction.moveTo(location, duration: snapshotInterval)
         bumper.runAction(move)
-        if let rot = rotation {
-            let lastRotation = bumper.zRotation
-            let rotate = SKAction.rotateByAngle(CGFloat(rot - lastRotation), duration: snapshotInterval)
-            bumper.runAction(rotate)
-        }
+        let lastRotation = bumper.zRotation
+        let rotate = SKAction.rotateByAngle(CGFloat(rotation - lastRotation), duration: 0)
+        bumper.runAction(rotate)
     }
    
     override func update(currentTime: CFTimeInterval) {
@@ -96,8 +95,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 break
             }
             let bumper = lineBumpers[i]
-            //TODO: update rotation as well
-            updateLineBumper(bumper, location: scaleNormPointToScreen(loc))
+            let rot = (lineRotations.count > i ? lineRotations[i] : CGFloat(0))
+            updateLineBumper(bumper, location: scaleNormPointToScreen(loc), rotation: rot)
         }
     }
     

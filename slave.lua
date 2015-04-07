@@ -1,7 +1,7 @@
 FreeAllRegions()
 FreeAllFlowboxes()
 
-SERVER_IP = "192.168.1.111"
+SERVER_IP = "35.2.72.109"
 
 local log = math.log
 
@@ -90,7 +90,7 @@ end
 
 function rotate( self, x, y, z )
 	if thisDeviceIndex ~= -1 then
-		SendOSCMessage(SERVER_IP, 8888, "/urMus/numbers", thisDeviceIndex, x, y, z)
+		SendOSCMessage(SERVER_IP, 8888, "/urMus/numbers", thisDeviceIndex, x)
 	end
 end
 
@@ -156,8 +156,9 @@ end
 
 data_x = 0
 function accel(self, x, y, z)
-	--DPrint(x) --rotation
-	data_x = x
+	if thisDeviceIndex ~= -1 then
+		SendOSCMessage(SERVER_IP, 8888, "/urMus/numbers", thisDeviceIndex, x)
+	end
 end
 
 function genclock(self,elapsed)
@@ -197,7 +198,7 @@ function createButtons()
 	--don't have rotation info handler
 	--the closest one is OnHeading
 	--r:Handle("OnHeading",heading)
-	r:Handle("OnRotation", rotate)
+	-- r:Handle("OnRotation", rotate)
 	r:Handle("OnAccelerate", accel)
 	r:Handle("OnUpdate",genclock)
 	SetOSCPort(8888)

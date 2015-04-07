@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Darwin
 import SpriteKit
 import AVFoundation
 
@@ -87,13 +88,14 @@ class GameViewController: UIViewController, NSNetServiceBrowserDelegate
             }
         } else {
             if let numbers = msg.valueArray() {
-                if numbers.count >= 4 {
+                if numbers.count >= 2 {
                     if let index = numbers.objectAtIndex(0) as? OSCValue {
                         if let x = numbers.objectAtIndex(1) as? OSCValue {
-                            if let y = numbers.objectAtIndex(2) as? OSCValue {
-                                if let z = numbers.objectAtIndex(3) as? OSCValue {
-                                    // index of device in externalPorts, x,y,z rotation values
-                                    print(index, x.floatValue(), y.floatValue(), z.floatValue())
+                            // index of device in externalPorts and x rotation value
+                            print(index, x.floatValue())
+                            if let d = Int(index.intValue()) as Int! {
+                                if lineRotations.count > d {
+                                    lineRotations[d] = lerp(lineRotations[d], CGFloat(-x.floatValue() * Float(M_PI_2)) + CGFloat(M_PI_2), 0.8)
                                 }
                             }
                         }
