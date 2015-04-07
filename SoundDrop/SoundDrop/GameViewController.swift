@@ -126,7 +126,7 @@ class GameViewController: UIViewController, NSNetServiceBrowserDelegate
         msg.addString(String(Int(arc4random_uniform(781)) + 220) + ", " + String(Int(arc4random_uniform(781)) + 220))
         
         for port in self.externalPorts {
-            port.sendThisMessage(msg)
+//            port.sendThisMessage(msg)
         }
     }
     
