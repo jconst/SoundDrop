@@ -1,6 +1,8 @@
 FreeAllRegions()
 FreeAllFlowboxes()
 
+SERVER_IP = "192.168.1.111"
+
 local log = math.log
 
 function string:split( inSplitPattern, outResults )
@@ -82,7 +84,27 @@ function lookForSoundDropServer()
 	StartNetDiscovery("SoundDrop")
 end
 
+function setUpConnectionToServer()
+	SendOSCMessage(SERVER_IP, 8888, "/urMus/text", host)
+end
+
+function rotate( self, x, y, z )
+	if thisDeviceIndex ~= -1 then
+		SendOSCMessage(SERVER_IP, 8888, "/urMus/numbers", thisDeviceIndex, x, y, z)
+	end
+end
+
+thisDeviceIndex = -1
 function gotOSC(self, numbers)
+	if string.find(numbers, "DeviceIndex:") then
+		thisDeviceIndex = tonumber(string.sub(numbers, -1))
+		DPrint(tostring(thisDeviceIndex))
+	end
+
+	if thisDeviceIndex == -1 then
+		return false
+	end
+
 	DPrint("Got OSC Message: " .. numbers)
 
 	local numStrings = numbers:split(", ")
@@ -135,12 +157,6 @@ function accel(self, x, y, z)
 	--DPrint(x) --rotation
 	data_x = x
 end
-
-function selectButton4()
-	SendOSCMessage("192.168.1.111",8888,"/urMus/numbers",math.random(220,1000),math.random(220,1000))
-	-- DPrint(data_x)
-end
-
 
 function genclock(self,elapsed)
 	if(clock==6) then
@@ -228,7 +244,7 @@ function createButtons()
 	r4.tb:SetLabel("send X")
 	r4.tb:SetColor(0,255,0,255)
 	r4.tb:SetFontHeight(20)
-	r4:Handle("OnTouchDown", selectButton4)
+	r4:Handle("OnTouchDown", setUpConnectionToServer)
 	r4:Handle("OnTouchUp", deselectButton4)
 	r4:EnableInput(true)
 	r4:Show()

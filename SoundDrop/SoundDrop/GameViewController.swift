@@ -34,7 +34,7 @@ class GameViewController: UIViewController, NSNetServiceBrowserDelegate
     
     let oscManager = OSCManager(serviceType: "")
     
-    var externalPort: OSCOutPort?
+    var externalPorts = [OSCOutPort]()
     
     @IBOutlet var skView: SKView!
     @IBOutlet var camView: UIView!
@@ -73,23 +73,40 @@ class GameViewController: UIViewController, NSNetServiceBrowserDelegate
     }
     
     func receivedOSCMessage(msg: OSCMessage) {
-        print(msg)
-    }
-    
-    func netServiceBrowser(aNetServiceBrowser: NSNetServiceBrowser, didFindService aNetService: NSNetService, moreComing: Bool) {
-        NSLog("Hi")
-    }
-    
-    func netServiceBrowser(aNetServiceBrowser: NSNetServiceBrowser, didNotSearch errorDict: [NSObject : AnyObject]) {
-        NSLog("fwe")
+        if msg.address() == "/urMus/text" {
+            if let s = msg.value().stringValue() as NSString! {
+                // add port for new slave device
+                let out = OSCOutPort(address: s, andPort: 8888)
+                let index = self.externalPorts.count
+                self.externalPorts.append(out)
+                
+                // tell the device what its id is
+                let msg = OSCMessage(address: "/urMus/text")
+                msg.addString("DeviceIndex:" + String(index))
+                out.sendThisMessage(msg)
+            }
+        } else {
+            if let numbers = msg.valueArray() {
+                if numbers.count >= 4 {
+                    if let index = numbers.objectAtIndex(0) as? OSCValue {
+                        if let x = numbers.objectAtIndex(1) as? OSCValue {
+                            if let y = numbers.objectAtIndex(2) as? OSCValue {
+                                if let z = numbers.objectAtIndex(3) as? OSCValue {
+                                    // index of device in externalPorts, x,y,z rotation values
+                                    print(index, x.floatValue(), y.floatValue(), z.floatValue())
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
     
     func setUpOSC() {
         self.oscManager.setDelegate(self)
         let inPort = self.oscManager.createNewInputForPort(8888)
         inPort.setDelegate(self)
-        let outPort = self.oscManager.createNewOutputToAddress("127.0.0.1", atPort: 8888)
-        self.externalPort = OSCOutPort(address: "192.168.1.110", andPort: 8888)
         
         NSTimer.scheduledTimerWithTimeInterval(0.5, target: self, selector: "sendToPhones:", userInfo: nil, repeats: true)
     }
@@ -100,9 +117,8 @@ class GameViewController: UIViewController, NSNetServiceBrowserDelegate
         let msg = OSCMessage(address: "/urMus/text")
         msg.addString(String(Int(arc4random_uniform(781)) + 220) + ", " + String(Int(arc4random_uniform(781)) + 220))
         
-        self.externalPort?.sendThisMessage(msg)
-        if self.externalPort == nil {
-            self.externalPort = OSCOutPort(address: "192.168.1.110", andPort: 8888)
+        for port in self.externalPorts {
+            port.sendThisMessage(msg)
         }
     }
     
