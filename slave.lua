@@ -1,9 +1,10 @@
 FreeAllRegions()
 FreeAllFlowboxes()
 
-SERVER_IP = "35.2.72.109"
+SERVER_IP = "192.168.1.104"
 
 local log = math.log
+timeSinceTrigger = 0
 
 function string:split( inSplitPattern, outResults )
   if not outResults then
@@ -70,9 +71,9 @@ function createFlowboxes()
 	snare_trigger:Push(0)
 	--can modify the parameters to get different sound
 	trigger:Push(0)
-	attack:Push(0.1)
+	attack:Push(0.05)
 	decay:Push(1)
-	sustain:Push(0.8)
+	sustain:Push(0.7)
 	release:Push(0.00002)
 end
 
@@ -88,41 +89,28 @@ function setUpConnectionToServer()
 	SendOSCMessage(SERVER_IP, 8888, "/urMus/text", host)
 end
 
-function rotate( self, x, y, z )
-	if thisDeviceIndex ~= -1 then
-		SendOSCMessage(SERVER_IP, 8888, "/urMus/numbers", thisDeviceIndex, x)
+thisDeviceIndex = -1
+function gotOSC(self, message)
+	if string.find(message, "DeviceIndex:") then
+		gotDeviceIndex(message)
+	else
+		gotSoundCommand(math.random(220,1000))
 	end
+	return true
+	--SetTorchFlashFrequency(nums[2])
 end
 
-thisDeviceIndex = -1
-function gotOSC(self, numbers)
+function gotDeviceIndex(message)
+	thisDeviceIndex = tonumber(string.sub(message, -1))
+	DPrint("DeviceIndex: " .. tostring(thisDeviceIndex))
+end
 
-	if thisDeviceIndex == -1 then
-		if string.find(numbers, "DeviceIndex:") then
-			thisDeviceIndex = tonumber(string.sub(numbers, -1))
-			DPrint("DeviceIndex: " .. tostring(thisDeviceIndex))
-		else
-			return false
-		end
-	end
-
-	DPrint("Got OSC Message: " .. numbers)
-
-	local numStrings = numbers:split(", ")
-	local nums = {}
-
-	for i = 1, #numStrings do
-	   nums[i] = tonumber(numStrings[i])
-	end
-
-	if #nums < 2 then
-		return false
-	end
-
-	currentfrequency = freq2norm(nums[1])
+function gotSoundCommand(freq)
+	DPrint("freq:"..freq)
+	currentfrequency = freq2norm(freq)
 	push:Push(currentfrequency)
 	trigger:Push(1)
-	--SetTorchFlashFrequency(nums[2])
+	timeSinceTrigger = 0
 end
 
 function selectButton()
@@ -131,13 +119,7 @@ function selectButton()
 	--now it sends to itself
 	--also can send rotation data to master piece
 	-- SendOSCMessage(host,8888,"/urMus/numbers",math.random(220,1000),math.random(220,1000))
-end
-
---now sound pulse time is constrained by deselect button
---in the futrue master show send two consective osc message to tell slave to trigger and stop
---otherwise need to find other way to implement this
-function deselectButton()
-	trigger:Push(-1)
+	gotSoundCommand(math.random(220,1000))
 end
 
 function selectButton2()
@@ -175,6 +157,10 @@ function genclock(self,elapsed)
 		--send data
 		--SendOSCMessage(host,8888,"/urMus/numbers",math.random(220,1000),math.random(220,1000))
 		-- DPrint("data_x:"..data_x)
+	end
+	timeSinceTrigger = timeSinceTrigger + elapsed
+	if timeSinceTrigger > 0.08 then
+		trigger:Push(-1)
 	end
 end
 

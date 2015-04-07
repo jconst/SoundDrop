@@ -10,6 +10,7 @@
 		C163AC291AD21650006AD273 /* libVVBasics.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C163AC181AD215FD006AD273 /* libVVBasics.a */; };
 		C163AC2A1AD21650006AD273 /* libVVOSC.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C163AC1A1AD215FD006AD273 /* libVVOSC.a */; };
 		F0607EAC1ACE25910079EA3D /* ImageReader.mm in Sources */ = {isa = PBXBuildFile; fileRef = F0607EAB1ACE25910079EA3D /* ImageReader.mm */; };
+		F0607EB51AD4742B0079EA3D /* OSCSender.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0607EB41AD4742B0079EA3D /* OSCSender.swift */; };
 		F060FFC31AC373DC008F79C9 /* libpd-ios.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F060FFBE1AC373A6008F79C9 /* libpd-ios.a */; };
 		F060FFC51AC373E5008F79C9 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F060FFC41AC373E5008F79C9 /* AudioToolbox.framework */; };
 		F060FFC81AC374D2008F79C9 /* bounce.pd in Resources */ = {isa = PBXBuildFile; fileRef = F060FFC71AC374D2008F79C9 /* bounce.pd */; };
@@ -229,6 +230,7 @@
 		C163ABDE1AD215FC006AD273 /* VVOpenSource.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = VVOpenSource.xcodeproj; path = vvopensource/VVOpenSource.xcodeproj; sourceTree = "<group>"; };
 		F0607EAA1ACE25910079EA3D /* ImageReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageReader.h; sourceTree = "<group>"; };
 		F0607EAB1ACE25910079EA3D /* ImageReader.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ImageReader.mm; sourceTree = "<group>"; };
+		F0607EB41AD4742B0079EA3D /* OSCSender.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OSCSender.swift; sourceTree = "<group>"; };
 		F060FFB81AC373A6008F79C9 /* libpd.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = libpd.xcodeproj; path = libpd/libpd.xcodeproj; sourceTree = "<group>"; };
 		F060FFC41AC373E5008F79C9 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		F060FFC71AC374D2008F79C9 /* bounce.pd */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = bounce.pd; path = ../../bounce.pd; sourceTree = "<group>"; };
@@ -395,6 +397,7 @@
 				F0EEB7291AB6882600149986 /* GameScene.sks */,
 				F0EEB72B1AB6882600149986 /* GameScene.swift */,
 				F0EEB72D1AB6882600149986 /* GameViewController.swift */,
+				F0607EB41AD4742B0079EA3D /* OSCSender.swift */,
 				F0EEB7871ABB6F5D00149986 /* Globals.swift */,
 				F0EEB7891ABB719A00149986 /* Helpers.swift */,
 			);
@@ -706,6 +709,7 @@
 				F0EEB78A1ABB719A00149986 /* Helpers.swift in Sources */,
 				F0EEB72C1AB6882600149986 /* GameScene.swift in Sources */,
 				F0EEB7881ABB6F5D00149986 /* Globals.swift in Sources */,
+				F0607EB51AD4742B0079EA3D /* OSCSender.swift in Sources */,
 				F0EEB72E1AB6882600149986 /* GameViewController.swift in Sources */,
 				F060FFCC1AC378E8008F79C9 /* SoundManager.m in Sources */,
 				F0EEB7281AB6882600149986 /* AppDelegate.swift in Sources */,

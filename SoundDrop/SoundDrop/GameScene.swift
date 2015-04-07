@@ -24,7 +24,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     func createBallDropper() {
         let dropper = SKSpriteNode(imageNamed: "dropper")
         dropper.name = "dropper"
-        let wait = SKAction.waitForDuration(0.5)
+        let wait = SKAction.waitForDuration(0.8)
         let drop = SKAction.runBlock {
             self.dropBall(dropper)
         }
@@ -113,6 +113,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func didBeginContact(contact: SKPhysicsContact) {
-        soundManager.playBounceWithContactSpeed(Double(contact.collisionImpulse))
+        for (i, line) in enumerate(lineBumpers) {
+            if line.physicsBody! == contact.bodyA ||
+               line.physicsBody! == contact.bodyB {
+                oscSender.playBounce(Double(contact.collisionImpulse), device: i)
+            }
+
+        }
     }
 }

@@ -33,11 +33,6 @@ class GameViewController: UIViewController, NSNetServiceBrowserDelegate
     var captureDevice : AVCaptureDevice?
     let imgReader: ImageReader
     
-    let oscManager = OSCManager(serviceType: "")
-    
-    var externalPorts = [OSCOutPort]()
-    var activeHosts = [String: Bool]()
-    
     @IBOutlet var skView: SKView!
     @IBOutlet var camView: UIView!
     
@@ -70,63 +65,7 @@ class GameViewController: UIViewController, NSNetServiceBrowserDelegate
             self.setUpSession()
             self.setupSnapshotTimer()
             
-            self.setUpOSC()
-        }
-    }
-    
-    func receivedOSCMessage(msg: OSCMessage) {
-        if msg.address() == "/urMus/text" {
-            if let s = msg.value().stringValue() as NSString! {
-                if self.activeHosts[s] != nil {
-                    return
-                }
-                
-                // add port for new slave device
-                let out = OSCOutPort(address: s, andPort: 8888)
-                let index = self.externalPorts.count
-                self.externalPorts.append(out)
-                self.activeHosts[s] = true
-                
-                // tell the device what its id is
-                let msg = OSCMessage(address: "/urMus/text")
-                msg.addString("DeviceIndex:" + String(index))
-                out.sendThisMessage(msg)
-            }
-        } else {
-            if let numbers = msg.valueArray() {
-                if numbers.count >= 2 {
-                    if let index = numbers.objectAtIndex(0) as? OSCValue {
-                        if let x = numbers.objectAtIndex(1) as? OSCValue {
-                            // index of device in externalPorts and x rotation value
-//                            print(index, x.floatValue())
-                            if let d = Int(index.floatValue()) as Int! {
-                                if lineRotations.count > d {
-                                    lineRotations[d] = lerp(lineRotations[d], CGFloat(-x.floatValue() * Float(M_PI_2)) + CGFloat(M_PI_2), 0.8)
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
-    
-    func setUpOSC() {
-        self.oscManager.setDelegate(self)
-        let inPort = self.oscManager.createNewInputForPort(8888)
-        inPort.setDelegate(self)
-        
-        NSTimer.scheduledTimerWithTimeInterval(0.5, target: self, selector: "sendToPhones:", userInfo: nil, repeats: true)
-    }
-    
-    func sendToPhones(time: NSTimer) {
-        var uuid: CFUUIDRef = CFUUIDCreate(nil)
-        var nonce: CFStringRef = CFUUIDCreateString(nil, uuid)
-        let msg = OSCMessage(address: "/urMus/text")
-        msg.addString(String(Int(arc4random_uniform(781)) + 220) + ", " + String(Int(arc4random_uniform(781)) + 220))
-        
-        for port in self.externalPorts {
-//            port.sendThisMessage(msg)
+            oscSender.setUpOSC()
         }
     }
     
