@@ -94,7 +94,7 @@ function gotOSC(self, message)
 	if string.find(message, "DeviceIndex:") then
 		gotDeviceIndex(message)
 	else
-		gotSoundCommand(math.random(220,1000))
+		gotSoundCommand(message)
 	end
 	return true
 	--SetTorchFlashFrequency(nums[2])
