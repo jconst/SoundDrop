@@ -36,6 +36,7 @@ class GameViewController: UIViewController, NSNetServiceBrowserDelegate
     let oscManager = OSCManager(serviceType: "")
     
     var externalPorts = [OSCOutPort]()
+    var activeHosts = [String: Bool]()
     
     @IBOutlet var skView: SKView!
     @IBOutlet var camView: UIView!
@@ -76,10 +77,15 @@ class GameViewController: UIViewController, NSNetServiceBrowserDelegate
     func receivedOSCMessage(msg: OSCMessage) {
         if msg.address() == "/urMus/text" {
             if let s = msg.value().stringValue() as NSString! {
+                if self.activeHosts[s] != nil {
+                    return
+                }
+                
                 // add port for new slave device
                 let out = OSCOutPort(address: s, andPort: 8888)
                 let index = self.externalPorts.count
                 self.externalPorts.append(out)
+                self.activeHosts[s] = true
                 
                 // tell the device what its id is
                 let msg = OSCMessage(address: "/urMus/text")
@@ -92,8 +98,8 @@ class GameViewController: UIViewController, NSNetServiceBrowserDelegate
                     if let index = numbers.objectAtIndex(0) as? OSCValue {
                         if let x = numbers.objectAtIndex(1) as? OSCValue {
                             // index of device in externalPorts and x rotation value
-                            print(index, x.floatValue())
-                            if let d = Int(index.intValue()) as Int! {
+//                            print(index, x.floatValue())
+                            if let d = Int(index.floatValue()) as Int! {
                                 if lineRotations.count > d {
                                     lineRotations[d] = lerp(lineRotations[d], CGFloat(-x.floatValue() * Float(M_PI_2)) + CGFloat(M_PI_2), 0.8)
                                 }

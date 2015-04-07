@@ -100,12 +100,11 @@ function gotOSC(self, numbers)
 	if thisDeviceIndex == -1 then
 		if string.find(numbers, "DeviceIndex:") then
 			thisDeviceIndex = tonumber(string.sub(numbers, -1))
-			DPrint(tostring(thisDeviceIndex))
+			DPrint("DeviceIndex: " .. tostring(thisDeviceIndex))
 		else
 			return false
 		end
 	end
-
 
 	DPrint("Got OSC Message: " .. numbers)
 
