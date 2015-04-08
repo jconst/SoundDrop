@@ -69,7 +69,7 @@ class GameViewController: UIViewController, NSNetServiceBrowserDelegate
             oscSender.setUpOSC()
             
             var rec = UITapGestureRecognizer(target: self, action: "clearLines")
-            rec.numberOfTouchesRequired = 4
+            rec.numberOfTouchesRequired = 3
             self.view.addGestureRecognizer(rec)
         }
     }
