@@ -1,10 +1,12 @@
 FreeAllRegions()
 FreeAllFlowboxes()
 
-SERVER_IP = "192.168.1.133"
+SERVER_IP = "192.168.1.104"
 
 local log = math.log
 timeSinceTrigger = 0
+timeSinceFlashToggle = 0
+flashlightOn = false
 
 function string:split( inSplitPattern, outResults )
   if not outResults then
@@ -143,24 +145,33 @@ function accel(self, x, y, z)
 end
 
 function update(self,elapsed)
-	if(clock==6) then
-		clock = 0
-		if(tick==5) then
-			tick = 1
-		else
-			tick = tick + 1
-		end
-	else
-		clock = clock + 1
+	-- if(clock==6) then
+	-- 	clock = 0
+	-- 	if(tick==5) then
+	-- 		tick = 1
+	-- 	else
+	-- 		tick = tick + 1
+	-- 	end
+	-- else
+	-- 	clock = clock + 1
+	-- end
+	-- if(tick==5) then
+	-- 	--send data
+	-- 	SendOSCMessage(host,8888,"/urMus/numbers",math.random(220,1000),math.random(220,1000))
+	-- end
+
+	timeSinceFlashToggle = timeSinceFlashToggle + elapsed
+	if timeSinceFlashToggle > 0.15 then
+		flashlightOn = not flashlightOn
+		-- SetTorch(flashlightOn)
+		DPrint("torch "..tostring(flashlightOn))
+		timeSinceFlashToggle = 0
 	end
-	if(tick==5) then
-		--send data
-		--SendOSCMessage(host,8888,"/urMus/numbers",math.random(220,1000),math.random(220,1000))
-		-- DPrint("data_x:"..data_x)
-	end
+
 	timeSinceTrigger = timeSinceTrigger + elapsed
 	if timeSinceTrigger > 0.05 then
 		trigger:Push(-1)
+		timeSinceTrigger = 0
 	end
 end
 
@@ -177,7 +188,6 @@ function createButtons()
 	r.tb:SetColor(255,0,0,255)
 	r.tb:SetFontHeight(30)
 	r:Handle("OnTouchDown", selectButton)
-	r:Handle("OnTouchUp", deselectButton)
 	r:Handle("OnOSCMessage",gotOSC)
 	r:Handle("OnNetConnect", foundSoundDropServer)
 	--don't have rotation info handler
