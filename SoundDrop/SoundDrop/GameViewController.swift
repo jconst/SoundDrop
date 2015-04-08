@@ -32,6 +32,7 @@ class GameViewController: UIViewController, NSNetServiceBrowserDelegate
     let captureSession = AVCaptureSession()
     var captureDevice : AVCaptureDevice?
     let imgReader: ImageReader
+    var gameScene: GameScene?
     
     @IBOutlet var skView: SKView!
     @IBOutlet var camView: UIView!
@@ -49,7 +50,8 @@ class GameViewController: UIViewController, NSNetServiceBrowserDelegate
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        if let scene = GameScene.unarchiveFromFile("GameScene") as? GameScene {
+        self.gameScene = GameScene.unarchiveFromFile("GameScene") as? GameScene
+        if self.gameScene? != nil {
             // Configure the view.
             skView.showsFPS = true
             skView.showsNodeCount = true
@@ -58,14 +60,17 @@ class GameViewController: UIViewController, NSNetServiceBrowserDelegate
             skView.ignoresSiblingOrder = true
             
             /* Set the scale mode to scale to fit the window */
-            scene.scaleMode = .AspectFill
-            
-            skView.presentScene(scene)
+            gameScene!.scaleMode = .AspectFill
+            skView.presentScene(gameScene)
             
             self.setUpSession()
             self.setupSnapshotTimer()
             
             oscSender.setUpOSC()
+            
+            var rec = UITapGestureRecognizer(target: self, action: "clearLines")
+            rec.numberOfTouchesRequired = 4
+            self.view.addGestureRecognizer(rec)
         }
     }
     
@@ -128,7 +133,6 @@ class GameViewController: UIViewController, NSNetServiceBrowserDelegate
                 }
             }
         }
-        
         return false
     }
 
@@ -190,6 +194,15 @@ class GameViewController: UIViewController, NSNetServiceBrowserDelegate
             return point
         }
         return closest//lerp(point, closest, 0.5)
+    }
+    
+    func clearLines() {
+        lineRotations = []
+        lineLocations = []
+        for line in gameScene!.lineBumpers {
+            line.removeFromParent()
+        }
+        gameScene!.lineBumpers = []
     }
     
     override func shouldAutorotate() -> Bool {

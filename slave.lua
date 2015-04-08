@@ -1,7 +1,7 @@
 FreeAllRegions()
 FreeAllFlowboxes()
 
-SERVER_IP = "192.168.1.104"
+SERVER_IP = "192.168.1.133"
 
 local log = math.log
 timeSinceTrigger = 0
@@ -73,7 +73,7 @@ function createFlowboxes()
 	trigger:Push(0)
 	attack:Push(0.05)
 	decay:Push(1)
-	sustain:Push(0.7)
+	sustain:Push(0.6)
 	release:Push(0.00002)
 end
 
@@ -142,7 +142,7 @@ function accel(self, x, y, z)
 	end
 end
 
-function genclock(self,elapsed)
+function update(self,elapsed)
 	if(clock==6) then
 		clock = 0
 		if(tick==5) then
@@ -159,7 +159,7 @@ function genclock(self,elapsed)
 		-- DPrint("data_x:"..data_x)
 	end
 	timeSinceTrigger = timeSinceTrigger + elapsed
-	if timeSinceTrigger > 0.08 then
+	if timeSinceTrigger > 0.05 then
 		trigger:Push(-1)
 	end
 end
@@ -185,7 +185,7 @@ function createButtons()
 	--r:Handle("OnHeading",heading)
 	-- r:Handle("OnRotation", rotate)
 	r:Handle("OnAccelerate", accel)
-	r:Handle("OnUpdate",genclock)
+	r:Handle("OnUpdate",update)
 	SetOSCPort(8888)
 	host,port = StartOSCListener()
 	r:EnableInput(true)
