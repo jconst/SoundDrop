@@ -8,6 +8,7 @@ timeSinceTrigger = 0
 timeSinceFlashToggle = 0
 flashlightOn = false
 shouldFlash = false
+playKick = false
 
 function string:split( inSplitPattern, outResults )
   if not outResults then
@@ -56,16 +57,15 @@ function createFlowboxes()
 	release =  FlowBox(FBPush)
 	adsr = FlowBox(FBADSR)
 	kick = FlowBox(FBSample)
-	kick:AddFile("kick.wav")
+	loop = FlowBox(FBPush)
+	loop.Out:SetPush(kick.Loop)
+	loop:Push(-1)
+	kick:AddFile("sounddrop-kick.wav")
 	kick_trigger = FlowBox(FBPush)
-	snare = FlowBox(FBSample)
-	snare:AddFile("snare.wav")
-	snare_trigger = FlowBox(FBPush)
 
 --links
 	dac.In:SetPull(sinosc.Out)
 	dac.In:SetPull(kick.Out)
-	dac.In:SetPull(snare.Out)
 	push.Out:SetPush(sinosc.Freq)
 	trigger.Out:SetPush(adsr.Trigger)
 	attack.Out:SetPush(adsr.Attack)
@@ -73,12 +73,10 @@ function createFlowboxes()
 	sustain.Out:SetPush(adsr.Sustain)
 	release.Out:SetPush(adsr.Release)
 	sinosc.Amp:SetPull(adsr.Out)
-	kick_trigger.Out:SetPush(kick.Amp)
-	snare_trigger.Out:SetPush(snare.Amp)
+	kick_trigger.Out:SetPush(kick.Pos)
 
 	push:Push(currentfrequency)
-	kick_trigger:Push(0)
-	snare_trigger:Push(0)
+	kick_trigger:Push(1)
 	--can modify the parameters to get different sound
 	trigger:Push(0)
 	attack:Push(0.05)
@@ -108,11 +106,15 @@ function gotDeviceIndex(message)
 end
 
 function gotSoundCommand(freq)
-	DPrint("freq:"..freq)
-	currentfrequency = freq2norm(freq)
-	push:Push(currentfrequency)
-	trigger:Push(1)
-	timeSinceTrigger = 0
+	if playKick then
+		kick_trigger:Push(-1)
+	else
+		DPrint("freq:"..freq)
+		currentfrequency = freq2norm(freq)
+		push:Push(currentfrequency)
+		trigger:Push(1)
+		timeSinceTrigger = 0
+	end
 end
 
 function selectButton()
@@ -120,10 +122,8 @@ function selectButton()
 end
 
 function selectButton2()
-	kick_trigger:Push(1)
-end
-function deselectButton2()
-	kick_trigger:Push(0)
+	playKick = not playKick
+	rKick.t:SetSolidColor(0,0,(playKick and 255 or 128),255)
 end
 
 function stopFlash()
@@ -173,13 +173,12 @@ function createButtons()
 	rKick:SetWidth(ScreenWidth()/2)
 	rKick:SetHeight(ScreenHeight()/4)
 	rKick:SetAnchor("BOTTOMLEFT",UIParent,"BOTTOMLEFT",ScreenWidth()/2,0)
-	rKick.t = rKick:Texture(0,255,255,255)
+	rKick.t = rKick:Texture(0,0,128,255)
 	rKick.tb = rKick:TextLabel()
-	rKick.tb:SetLabel("play kick")
+	rKick.tb:SetLabel("toggle kick")
 	rKick.tb:SetColor(255,0,0,255)
 	rKick.tb:SetFontHeight(20)
 	rKick:Handle("OnTouchDown", selectButton2)
-	rKick:Handle("OnTouchUp", deselectButton2)
 	rKick:EnableInput(true)
 	rKick:Show()
 
