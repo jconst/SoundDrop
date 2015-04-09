@@ -11,6 +11,7 @@ import SpriteKit
 class GameScene: SKScene, SKPhysicsContactDelegate {
     
     var lineBumpers = Array<SKSpriteNode>()
+    var draggedNode: SKNode?
     let ballCategory: UInt32 = 0
     let bumperCategory: UInt32 = 1
     
@@ -19,6 +20,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.physicsWorld.gravity = CGVectorMake(0, -3)
         self.physicsWorld.contactDelegate = self
         createBallDropper()
+        let tapRec = UITapGestureRecognizer(target: self, action: "didTap:")
+        view.addGestureRecognizer(tapRec)
     }
     
     func createBallDropper() {
@@ -43,7 +46,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         ball.xScale = 0.3
         ball.yScale = 0.3
         ball.name = "ball"
-        ball.position = CGPointMake(0.5*self.frame.size.width, self.frame.size.height*0.75)
+        ball.position = dropper.position
         self.addChild(ball)
         
         ball.physicsBody = SKPhysicsBody(circleOfRadius: ball.frame.size.width/2)
@@ -56,8 +59,36 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
-        for touch: AnyObject in touches {
-            let location = touch.locationInNode(self)
+        let node = self.nodeAtPoint(touches.anyObject()!.locationInNode(self))
+        if node != self {
+            draggedNode = node
+        }
+    }
+    
+    override func touchesMoved(touches: NSSet, withEvent event: UIEvent) {
+        if let node = self.draggedNode as? SKSpriteNode {
+            if let touch = touches.anyObject() as? UITouch {
+                let x = touch.locationInNode(self).x - touch.previousLocationInNode(self).x
+                let y = touch.locationInNode(self).y - touch.previousLocationInNode(self).y
+                if let index = find(lineBumpers, node) {
+                    let prev = scaleNormPointToScreen(lineLocations[index])
+                    lineLocations[index] = normalizeScreenPoint(CGPoint(x: prev.x + x, y: prev.y + y))
+                } else {
+                    let move = SKAction.moveByX(x, y: y, duration: 0.01)
+                    draggedNode!.runAction(move)
+                }
+            }
+        }
+    }
+    
+    override func touchesEnded(touches: NSSet, withEvent event: UIEvent) {
+        draggedNode = nil
+    }
+    
+    func didTap(rec: UITapGestureRecognizer) {
+        if rec.numberOfTouches() == 1 {
+            var location = rec.locationInView(self.view!)
+            location.y = self.view!.frame.size.height - location.y
             lineRotations.append(0)
             lineLocations.append(normalizeScreenPoint(location))
             lineBumpers.append(createLineBumper(location, rotation: 0, width: 100))
