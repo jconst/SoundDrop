@@ -7,6 +7,7 @@ local log = math.log
 timeSinceTrigger = 0
 timeSinceFlashToggle = 0
 flashlightOn = false
+shouldFlash = false
 
 function string:split( inSplitPattern, outResults )
   if not outResults then
@@ -28,9 +29,16 @@ function freq2norm(freq)
 end
 
 function main()
+	setupOSC()
 	createFlowboxes()
 	createButtons()
 	lookForSoundDropServer()
+end
+
+function setupOSC()
+	SetOSCPort(8888)
+	host,port = StartOSCListener()
+	DPrint(host)
 end
 
 function createFlowboxes()
@@ -79,19 +87,11 @@ function createFlowboxes()
 	release:Push(0.00002)
 end
 
-function foundSoundDropServer(region, hostname)
-	DPrint(hostname)
-end
-
-function lookForSoundDropServer()
-	StartNetDiscovery("SoundDrop")
-end
-
-function setUpConnectionToServer()
+function connectAndStart()
 	SendOSCMessage(SERVER_IP, 8888, "/urMus/text", host)
+	shouldFlash = true
 end
 
-thisDeviceIndex = -1
 function gotOSC(self, message)
 	if string.find(message, "DeviceIndex:") then
 		gotDeviceIndex(message)
@@ -99,9 +99,9 @@ function gotOSC(self, message)
 		gotSoundCommand(message)
 	end
 	return true
-	--SetTorchFlashFrequency(nums[2])
 end
 
+thisDeviceIndex = -1
 function gotDeviceIndex(message)
 	thisDeviceIndex = tonumber(string.sub(message, -1))
 	DPrint("DeviceIndex: " .. tostring(thisDeviceIndex))
@@ -116,11 +116,6 @@ function gotSoundCommand(freq)
 end
 
 function selectButton()
-	--DPrint("trigger")
-	--in the future replace random with frequency we want to send
-	--now it sends to itself
-	--also can send rotation data to master piece
-	-- SendOSCMessage(host,8888,"/urMus/numbers",math.random(220,1000),math.random(220,1000))
 	gotSoundCommand(math.random(220,1000))
 end
 
@@ -130,14 +125,11 @@ end
 function deselectButton2()
 	kick_trigger:Push(0)
 end
-function selectButton3()
-	snare_trigger:Push(1)
-end
-function deselectButton3()
-	snare_trigger:Push(0)
+
+function stopFlash()
+	shouldFlash = false
 end
 
-data_x = 0
 function accel(self, x, y, z)
 	if thisDeviceIndex ~= -1 then
 		SendOSCMessage(SERVER_IP, 8888, "/urMus/numbers", thisDeviceIndex, x)
@@ -145,26 +137,10 @@ function accel(self, x, y, z)
 end
 
 function update(self,elapsed)
-	-- if(clock==6) then
-	-- 	clock = 0
-	-- 	if(tick==5) then
-	-- 		tick = 1
-	-- 	else
-	-- 		tick = tick + 1
-	-- 	end
-	-- else
-	-- 	clock = clock + 1
-	-- end
-	-- if(tick==5) then
-	-- 	--send data
-	-- 	SendOSCMessage(host,8888,"/urMus/numbers",math.random(220,1000),math.random(220,1000))
-	-- end
-
 	timeSinceFlashToggle = timeSinceFlashToggle + elapsed
 	if timeSinceFlashToggle > 0.15 then
 		flashlightOn = not flashlightOn
-		-- SetTorch(flashlightOn)
-		DPrint("torch "..tostring(flashlightOn))
+		SetTorch(flashlightOn and shouldFlash)
 		timeSinceFlashToggle = 0
 	end
 
@@ -176,75 +152,59 @@ function update(self,elapsed)
 end
 
 function createButtons()
-	clock = 0
-	tick = 0
-	--create a button to send osc message to itself by pressing the button
 	r = Region()
 	r:SetWidth(ScreenWidth()/2)
 	r:SetHeight(ScreenHeight()/4)
 	r.t = r:Texture(255,255,0,255)
 	r.tb = r:TextLabel()
-	r.tb:SetLabel("press me")
+	r.tb:SetLabel("test sound")
 	r.tb:SetColor(255,0,0,255)
-	r.tb:SetFontHeight(30)
+	r.tb:SetFontHeight(25)
 	r:Handle("OnTouchDown", selectButton)
-	r:Handle("OnOSCMessage",gotOSC)
-	r:Handle("OnNetConnect", foundSoundDropServer)
-	--don't have rotation info handler
-	--the closest one is OnHeading
-	--r:Handle("OnHeading",heading)
-	-- r:Handle("OnRotation", rotate)
+	r:Handle("OnOSCMessage", gotOSC)
 	r:Handle("OnAccelerate", accel)
 	r:Handle("OnUpdate",update)
-	SetOSCPort(8888)
-	host,port = StartOSCListener()
 	r:EnableInput(true)
 	r:Show()
 
-	DPrint(host)
+	rKick = Region()
+	rKick:SetWidth(ScreenWidth()/2)
+	rKick:SetHeight(ScreenHeight()/4)
+	rKick:SetAnchor("BOTTOMLEFT",UIParent,"BOTTOMLEFT",ScreenWidth()/2,0)
+	rKick.t = rKick:Texture(0,255,255,255)
+	rKick.tb = rKick:TextLabel()
+	rKick.tb:SetLabel("play kick")
+	rKick.tb:SetColor(255,0,0,255)
+	rKick.tb:SetFontHeight(20)
+	rKick:Handle("OnTouchDown", selectButton2)
+	rKick:Handle("OnTouchUp", deselectButton2)
+	rKick:EnableInput(true)
+	rKick:Show()
 
-	StartNetAdvertise("SoundDropSlave", 8888)
+	start = Region()
+	start:SetWidth(ScreenWidth()/2)
+	start:SetHeight(ScreenHeight()/4)
+	start:SetAnchor("TOPLEFT",UIParent,"TOPLEFT",0,0)
+	start.t = start:Texture(0,0,255,255)
+	start.tb = start:TextLabel()
+	start.tb:SetLabel("connect & start")
+	start.tb:SetColor(0,255,0,255)
+	start.tb:SetFontHeight(18)
+	start:Handle("OnTouchDown", connectAndStart)
+	start:EnableInput(true)
+	start:Show()
 
-	r2 = Region()
-	r2:SetWidth(ScreenWidth()/2)
-	r2:SetHeight(ScreenHeight()/4)
-	r2:SetAnchor("BOTTOMLEFT",UIParent,"BOTTOMLEFT",ScreenWidth()/2,0)
-	r2.t = r2:Texture(0,255,255,255)
-	r2.tb = r2:TextLabel()
-	r2.tb:SetLabel("play kick")
-	r2.tb:SetColor(255,0,0,255)
-	r2.tb:SetFontHeight(20)
-	r2:Handle("OnTouchDown", selectButton2)
-	r2:Handle("OnTouchUp", deselectButton2)
-	r2:EnableInput(true)
-	r2:Show()
-
-	r3 = Region()
-	r3:SetWidth(ScreenWidth()/2)
-	r3:SetHeight(ScreenHeight()/4)
-	r3:SetAnchor("TOPLEFT",UIParent,"TOPLEFT",0,0)
-	r3.t = r3:Texture(255,0,255,255)
-	r3.tb = r3:TextLabel()
-	r3.tb:SetLabel("play snare")
-	r3.tb:SetColor(0,0,255,255)
-	r3.tb:SetFontHeight(20)
-	r3:Handle("OnTouchDown", selectButton3)
-	r3:Handle("OnTouchUp", deselectButton3)
-	r3:EnableInput(true)
-	r3:Show()
-
-	r4 = Region()
-	r4:SetWidth(ScreenWidth()/2)
-	r4:SetHeight(ScreenHeight()/4)
-	r4:SetAnchor("TOPLEFT",UIParent,"TOPLEFT",ScreenWidth()/2,0)
-	r4.t = r4:Texture(0,0,255,255)
-	r4.tb = r4:TextLabel()
-	r4.tb:SetLabel("send X")
-	r4.tb:SetColor(0,255,0,255)
-	r4.tb:SetFontHeight(20)
-	r4:Handle("OnTouchDown", setUpConnectionToServer)
-	r4:Handle("OnTouchUp", deselectButton4)
-	r4:EnableInput(true)
-	r4:Show()
+	stop = Region()
+	stop:SetWidth(ScreenWidth()/2)
+	stop:SetHeight(ScreenHeight()/4)
+	stop:SetAnchor("TOPLEFT",UIParent,"TOPLEFT",ScreenWidth()/2,0)
+	stop.t = stop:Texture(255,0,255,255)
+	stop.tb = stop:TextLabel()
+	stop.tb:SetLabel("stop flash")
+	stop.tb:SetColor(0,0,255,255)
+	stop.tb:SetFontHeight(20)
+	stop:Handle("OnTouchDown", stopFlash)
+	stop:EnableInput(true)
+	stop:Show()
 end
 main()
