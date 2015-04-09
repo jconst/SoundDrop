@@ -1,7 +1,7 @@
 FreeAllRegions()
 FreeAllFlowboxes()
 
-SERVER_IP = "192.168.1.104"
+SERVER_IP = "192.168.1.60"
 
 local log = math.log
 timeSinceTrigger = 0
@@ -60,7 +60,7 @@ function createFlowboxes()
 	loop = FlowBox(FBPush)
 	loop.Out:SetPush(kick.Loop)
 	loop:Push(-1)
-	kick:AddFile("sounddrop-kick.wav")
+	kick:AddFile("kick.wav")
 	kick_trigger = FlowBox(FBPush)
 
 --links
