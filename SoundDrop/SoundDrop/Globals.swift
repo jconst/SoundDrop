@@ -12,4 +12,4 @@ let soundManager = SoundManager()
 let oscSender = OSCSender()
 
 let snapshotInterval = 0.2
-let flashMaxJump = CGFloat(0.2) // from 0 to 1 where 1 is a jump across the whole screen
+let flashMaxJump = CGFloat(0.08) // from 0 to 1 where 1 is a jump across the whole screen
