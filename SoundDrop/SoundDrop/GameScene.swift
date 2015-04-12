@@ -14,6 +14,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var draggedNode: SKNode?
     let ballCategory: UInt32 = 0
     let bumperCategory: UInt32 = 1
+    var dropDelay = 0.8
     
     override func didMoveToView(view: SKView) {
         // Set gravity
@@ -27,12 +28,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     func createBallDropper() {
         let dropper = SKSpriteNode(imageNamed: "dropper")
         dropper.name = "dropper"
-        let wait = SKAction.waitForDuration(0.8)
-        let drop = SKAction.runBlock {
-            self.dropBall(dropper)
-        }
-        let sequence = SKAction.sequence([drop, wait])
-        dropper.runAction(SKAction.repeatActionForever(sequence))
+        self.dropBall(dropper)
         
         dropper.xScale = 0.3
         dropper.yScale = 0.3
@@ -56,6 +52,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         ball.physicsBody!.allowsRotation = false
         ball.physicsBody!.categoryBitMask = ballCategory
         ball.physicsBody!.contactTestBitMask = bumperCategory
+        
+        let wait = SKAction.waitForDuration(dropDelay)
+        let drop = SKAction.runBlock {
+            self.dropBall(dropper)
+        }
+        dropper.runAction(SKAction.sequence([wait, drop]))
     }
     
     override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
@@ -66,17 +68,24 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     override func touchesMoved(touches: NSSet, withEvent event: UIEvent) {
-        if let node = self.draggedNode as? SKSpriteNode {
-            if let touch = touches.anyObject() as? UITouch {
-                let x = touch.locationInNode(self).x - touch.previousLocationInNode(self).x
-                let y = touch.locationInNode(self).y - touch.previousLocationInNode(self).y
-                if let index = find(lineBumpers, node) {
-                    let prev = scaleNormPointToScreen(lineLocations[index])
-                    lineLocations[index] = normalizeScreenPoint(CGPoint(x: prev.x + x, y: prev.y + y))
-                } else {
-                    let move = SKAction.moveByX(x, y: y, duration: 0.01)
-                    draggedNode!.runAction(move)
+        if touches.count == 1 {
+            if let node = self.draggedNode as? SKSpriteNode {
+                if let touch = touches.anyObject() as? UITouch {
+                    let x = touch.locationInNode(self).x - touch.previousLocationInNode(self).x
+                    let y = touch.locationInNode(self).y - touch.previousLocationInNode(self).y
+                    if let index = find(lineBumpers, node) {
+                        let prev = scaleNormPointToScreen(lineLocations[index])
+                        lineLocations[index] = normalizeScreenPoint(CGPoint(x: prev.x + x, y: prev.y + y))
+                    } else {
+                        let move = SKAction.moveByX(x, y: y, duration: 0.01)
+                        draggedNode!.runAction(move)
+                    }
                 }
+            }
+        } else {
+            if let touch = touches.anyObject() as? UITouch {
+                let height = 1.0 - (touch.locationInNode(self).y / self.size.height)
+                dropDelay = Double(height)
             }
         }
     }
@@ -91,12 +100,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             location.y = self.view!.frame.size.height - location.y
             lineRotations.append(0)
             lineLocations.append(normalizeScreenPoint(location))
-            lineBumpers.append(createLineBumper(location, rotation: 0, width: 100))
+            lineBumpers.append(createLineBumper(location, rotation: 0))
         }
     }
     
-    func createLineBumper(location: CGPoint, rotation: CGFloat, width: CGFloat) -> SKSpriteNode {
-        let bumper = SKSpriteNode(color: UIColor.whiteColor(), size: CGSizeMake(100, 10))
+    func createLineBumper(location: CGPoint, rotation: CGFloat) -> SKSpriteNode {
+        let bumper = SKSpriteNode(color: UIColor.whiteColor(), size: CGSizeMake(130, 12))
         
         bumper.position = location
         updateLineBumper(bumper, location: location, rotation: rotation)
