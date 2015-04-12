@@ -56,17 +56,12 @@ class OSCSender: NSObject {
         }
     }
 
-    let freq_exp = pow(2.0, (1.0/12.0))
     
     func playBounce(contactSpeed: Double, device: Int) {
-        var midiKey = Int(73 + (((contactSpeed / 1.5) - 0.5) * 48))
-        if contains([1,3,6,8,10],midiKey % 12) {
-            midiKey--
-        }
-        let frequency = 440 * pow(freq_exp, Double(midiKey-69));
     
+        let freq = freqForSpeed(contactSpeed)
         let msg = OSCMessage(address: "/urMus/text")
-        msg.addString(String(format: "%.2f", frequency))
+        msg.addString(String(format: "%.2f", freq))
         
         if self.externalPorts.count > device {
             self.externalPorts[device].sendThisMessage(msg)

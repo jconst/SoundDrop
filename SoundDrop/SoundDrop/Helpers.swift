@@ -20,3 +20,17 @@ func lerp(p1: CGPoint, p2: CGPoint, fraction: CGFloat) -> CGPoint {
 func lerp(v1: CGFloat, v2: CGFloat, fraction: CGFloat) -> CGFloat {
     return v1 + ((v2 - v1) * fraction)
 }
+
+let freq_exp = pow(2.0, (1.0/12.0))
+func noteForSpeed(contactSpeed: Double) -> Int {
+    var midiKey = Int(73 + (((contactSpeed / 1.5) - 0.5) * 48))
+    if contains([1,3,6,8,10],midiKey % 12) {
+        midiKey--
+    }
+    return midiKey
+}
+
+func freqForSpeed(contactSpeed: Double) -> Double {
+    let midiKey = noteForSpeed(contactSpeed)
+    return 440.0 * pow(freq_exp, Double(midiKey-69))
+}

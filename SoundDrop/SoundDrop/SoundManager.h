@@ -10,6 +10,6 @@
 
 @interface SoundManager : NSObject
 
-- (void)playBounceWithContactSpeed:(double)speed;
+- (void)playBounceWithMidiNote:(int)note;
 
 @end

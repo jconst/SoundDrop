@@ -11,8 +11,6 @@
 #import "PdFile.h"
 #import "PdBase.h"
 
-static double freq_exp = 0;
-
 @interface SoundManager ()
 @property (nonatomic, strong) PdAudioController *controller;
 @property (nonatomic, strong) PdFile *bouncePatch;
@@ -38,17 +36,10 @@ static double freq_exp = 0;
     return self;
 }
 
-- (void)playBounceWithContactSpeed:(double)speed
+- (void)playBounceWithMidiNote:(int)note
 {
-    if (freq_exp == 0) {
-        freq_exp = pow(2.0, (1.0/12.0));
-    }
-    
-    int midiKey = 73 + (((speed / 1.5) - 0.5) * 48);
-    double frequency = 440 * pow(freq_exp, (midiKey-69));
-    
     //Todo: send frequency over OSC to slave app
-    [PdBase sendFloat:midiKey toReceiver:@"bouncekey"];
+    [PdBase sendFloat:note toReceiver:@"bouncekey"];
 }
 
 @end

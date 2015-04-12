@@ -33,7 +33,6 @@ function main()
 	setupOSC()
 	createFlowboxes()
 	createButtons()
-	lookForSoundDropServer()
 end
 
 function setupOSC()
@@ -62,10 +61,12 @@ function createFlowboxes()
 	loop:Push(-1)
 	kick:AddFile("kick.wav")
 	kick_trigger = FlowBox(FBPush)
+	rev = FlowBox(FBJCRev)
 
 --links
-	dac.In:SetPull(sinosc.Out)
-	dac.In:SetPull(kick.Out)
+	rev.In:SetPull(sinosc.Out)
+	rev.In:SetPull(kick.Out)
+	dac.In:SetPull(rev.Out)
 	push.Out:SetPush(sinosc.Freq)
 	trigger.Out:SetPush(adsr.Trigger)
 	attack.Out:SetPush(adsr.Attack)

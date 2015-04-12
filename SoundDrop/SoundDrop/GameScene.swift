@@ -148,6 +148,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             if line.physicsBody! == contact.bodyA ||
                line.physicsBody! == contact.bodyB {
                 oscSender.playBounce(Double(contact.collisionImpulse), device: i)
+                soundManager.playBounceWithMidiNote(Int32(noteForSpeed(Double(contact.collisionImpulse))))
             }
 
         }
