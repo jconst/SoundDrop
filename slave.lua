@@ -140,8 +140,8 @@ end
 function update(self,elapsed)
 	timeSinceFlashToggle = timeSinceFlashToggle + elapsed
 	-- flash off slightly longer than on
-	if (flashlightOn and timeSinceFlashToggle > 0.1) or
-	   (not flashlightOn and timeSinceFlashToggle > 0.2) then
+	if (flashlightOn and timeSinceFlashToggle > 0.11) or
+	   (not flashlightOn and timeSinceFlashToggle > 0.22) then
 		flashlightOn = not flashlightOn
 		SetTorch(flashlightOn and shouldFlash)
 		timeSinceFlashToggle = 0
