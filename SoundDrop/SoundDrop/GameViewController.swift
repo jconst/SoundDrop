@@ -178,8 +178,6 @@ class GameViewController: UIViewController, NSNetServiceBrowserDelegate
         if flashes.count == 0 {
             return point
         }
-        // TODO: If this algorithm isn't satisfactory, try using some heuristic
-        // combination of flash size as well as closeness to the point
         
         var closest = flashes[0]
         var smallestDist = distanceBetween(closest, point)

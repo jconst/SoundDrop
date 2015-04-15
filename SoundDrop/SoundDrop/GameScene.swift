@@ -11,18 +11,31 @@ import SpriteKit
 class GameScene: SKScene, SKPhysicsContactDelegate {
     
     var lineBumpers = Array<SKSpriteNode>()
+    var lineCopies = Array<SKSpriteNode>()
     var draggedNode: SKNode?
     let ballCategory: UInt32 = 0
     let bumperCategory: UInt32 = 1
     var dropDelay = 0.8
+    var lock: SKSpriteNode?
     
     override func didMoveToView(view: SKView) {
         // Set gravity
         self.physicsWorld.gravity = CGVectorMake(0, -3)
         self.physicsWorld.contactDelegate = self
         createBallDropper()
+        createLock()
         let tapRec = UITapGestureRecognizer(target: self, action: "didTap:")
         view.addGestureRecognizer(tapRec)
+    }
+    
+    func createLock() {
+        lock = SKSpriteNode(imageNamed: "lock")
+        lock!.name = "lock"
+        lock!.position = CGPointMake(20, 20)
+        lock!.xScale = 0.1
+        lock!.yScale = 0.1
+        
+        self.addChild(lock!)
     }
     
     func createBallDropper() {
@@ -64,6 +77,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let node = self.nodeAtPoint(touches.anyObject()!.locationInNode(self))
         if node != self {
             draggedNode = node
+            if node.name == "lock" {
+                lock = lock!.copy() as? SKSpriteNode
+                self.addChild(lock!)
+            }
         }
     }
     
@@ -91,6 +108,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     override func touchesEnded(touches: NSSet, withEvent event: UIEvent) {
+        if draggedNode!.name == "lock" {
+            draggedNode!.removeFromParent()
+            for line in lineBumpers {
+                if draggedNode!.intersectsNode(line) {
+                    let cp = line.copy() as SKSpriteNode
+                    lineCopies.append(cp)
+                    self.addChild(cp)
+                }
+            }
+        }
         draggedNode = nil
     }
     
@@ -159,7 +186,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 oscSender.playBounce(Double(contact.collisionImpulse), device: i)
                 soundManager.playBounceWithMidiNote(Int32(noteForSpeed(Double(contact.collisionImpulse))))
             }
-
+        }
+        
+        for (i, line) in enumerate(lineCopies) {
+            if line.physicsBody! == contact.bodyA ||
+               line.physicsBody! == contact.bodyB {
+                soundManager.playBounceWithMidiNote(Int32(noteForSpeed(Double(contact.collisionImpulse))))
+            }
         }
     }
 }
