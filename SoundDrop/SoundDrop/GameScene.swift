@@ -6,17 +6,23 @@
 //  Copyright (c) 2015 jconst. All rights reserved.
 //
 
+import AVFoundation
 import SpriteKit
 
 class GameScene: SKScene, SKPhysicsContactDelegate {
     
     var lineBumpers = Array<SKSpriteNode>()
     var lineCopies = Array<SKSpriteNode>()
-    var draggedNode: SKNode?
+    var draggedNode: SKSpriteNode?
+    var lock: SKSpriteNode?
+    var bass: SKSpriteNode?
+    var bassLine: SKSpriteNode?
+
     let ballCategory: UInt32 = 0
     let bumperCategory: UInt32 = 1
     var dropDelay = 0.8
-    var lock: SKSpriteNode?
+    
+    var audioPlayer = AVAudioPlayer()
     
     override func didMoveToView(view: SKView) {
         // Set gravity
@@ -24,8 +30,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.physicsWorld.contactDelegate = self
         createBallDropper()
         createLock()
+        createBass()
+        
         let tapRec = UITapGestureRecognizer(target: self, action: "didTap:")
         view.addGestureRecognizer(tapRec)
+        let kickSound = NSURL(fileURLWithPath: NSBundle.mainBundle().pathForResource("kick", ofType: "wav")!)
+        audioPlayer = AVAudioPlayer(contentsOfURL: kickSound, error: nil)
+        audioPlayer.prepareToPlay()
     }
     
     func createLock() {
@@ -36,6 +47,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         lock!.yScale = 0.1
         
         self.addChild(lock!)
+    }
+
+    func createBass() {
+        bass = SKSpriteNode(imageNamed: "bass")
+        bass!.name = "bass"
+        bass!.position = CGPointMake(20, 50)
+        bass!.xScale = 0.1
+        bass!.yScale = 0.1
+        
+        self.addChild(bass!)
     }
     
     func createBallDropper() {
@@ -76,17 +97,22 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
         let node = self.nodeAtPoint(touches.anyObject()!.locationInNode(self))
         if node != self {
-            draggedNode = node
-            if node.name == "lock" {
-                lock = lock!.copy() as? SKSpriteNode
-                self.addChild(lock!)
+            if let sprite = node as? SKSpriteNode {
+                draggedNode = sprite
+                if lock == draggedNode {
+                    lock = lock!.copy() as? SKSpriteNode
+                    self.addChild(lock!)
+                } else if bass == draggedNode {
+                    bass = bass!.copy() as? SKSpriteNode
+                    self.addChild(bass!)
+                }
             }
         }
     }
     
     override func touchesMoved(touches: NSSet, withEvent event: UIEvent) {
         if touches.count == 1 {
-            if let node = self.draggedNode as? SKSpriteNode {
+            if let node = self.draggedNode {
                 if let touch = touches.anyObject() as? UITouch {
                     let x = touch.locationInNode(self).x - touch.previousLocationInNode(self).x
                     let y = touch.locationInNode(self).y - touch.previousLocationInNode(self).y
@@ -108,13 +134,22 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     override func touchesEnded(touches: NSSet, withEvent event: UIEvent) {
-        if draggedNode!.name == "lock" {
-            draggedNode!.removeFromParent()
-            for line in lineBumpers {
-                if draggedNode!.intersectsNode(line) {
-                    let cp = line.copy() as SKSpriteNode
-                    lineCopies.append(cp)
-                    self.addChild(cp)
+        if let name = draggedNode?.name? {
+            if contains(["lock", "bass"], name) {
+                draggedNode!.removeFromParent()
+                for line in lineBumpers {
+                    if draggedNode!.intersectsNode(line) &&
+                       name == "lock" {
+                        let cp = line.copy() as SKSpriteNode
+                        lineCopies.append(cp)
+                        self.addChild(cp)
+                    }
+                }
+                for line in lineCopies {
+                    if draggedNode!.intersectsNode(line) &&
+                       name == "bass" {
+                        bassLine = line
+                    }
                 }
             }
         }
@@ -191,8 +226,18 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         for (i, line) in enumerate(lineCopies) {
             if line.physicsBody! == contact.bodyA ||
                line.physicsBody! == contact.bodyB {
-                soundManager.playBounceWithMidiNote(Int32(noteForSpeed(Double(contact.collisionImpulse))))
+                if line == bassLine {
+                    playKick()
+                } else {
+                    soundManager.playBounceWithMidiNote(Int32(noteForSpeed(Double(contact.collisionImpulse))))
+                }
             }
         }
+    }
+    
+    func playKick() {
+        audioPlayer.stop()
+        audioPlayer.currentTime = 0
+        audioPlayer.play()
     }
 }
