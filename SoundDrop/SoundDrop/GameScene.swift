@@ -13,8 +13,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var lineBumpers = Array<SKSpriteNode>()
     var lineCopies = Array<SKSpriteNode>()
     var draggedNode: SKSpriteNode?
+    
     var lock: SKSpriteNode?
     var bass: SKSpriteNode?
+    var cross: SKSpriteNode?
     var bassLine: SKSpriteNode?
 
     let ballCategory: UInt32 = 0
@@ -29,6 +31,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.physicsWorld.contactDelegate = self
         createBallDropper()
         createLock()
+        createCross()
         createBass()
         
         let tapRec = UITapGestureRecognizer(target: self, action: "didTap:")
@@ -45,10 +48,20 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.addChild(lock!)
     }
 
+    func createCross() {
+        cross = SKSpriteNode(imageNamed: "cross")
+        cross!.name = "cross"
+        cross!.position = CGPointMake(25, 80)
+        cross!.xScale = 0.13
+        cross!.yScale = 0.13
+        
+        self.addChild(cross!)
+    }
+    
     func createBass() {
         bass = SKSpriteNode(imageNamed: "bass")
         bass!.name = "bass"
-        bass!.position = CGPointMake(25, 65)
+        bass!.position = CGPointMake(25, 125)
         bass!.xScale = 0.15
         bass!.yScale = 0.15
         
@@ -101,6 +114,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 } else if bass == draggedNode {
                     bass = bass!.copy() as? SKSpriteNode
                     self.addChild(bass!)
+                } else if cross == draggedNode {
+                    cross = cross!.copy() as? SKSpriteNode
+                    self.addChild(cross!)
                 }
             }
         }
@@ -131,7 +147,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     override func touchesEnded(touches: NSSet, withEvent event: UIEvent) {
         if let name = draggedNode?.name? {
-            if contains(["lock", "bass"], name) {
+            if contains(["lock", "bass", "cross"], name) {
                 draggedNode!.removeFromParent()
                 for line in lineBumpers {
                     if draggedNode!.intersectsNode(line) &&
@@ -141,10 +157,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                         self.addChild(cp)
                     }
                 }
-                for line in lineCopies {
-                    if draggedNode!.intersectsNode(line) &&
-                       name == "bass" {
-                        bassLine = line
+                for (i, line) in reverse(Array(enumerate(lineCopies))) {
+                    if draggedNode!.intersectsNode(line) {
+                        if name == "bass" {
+                            bassLine = line
+                        } else if name == "cross" {
+                            line.removeFromParent()
+                            lineCopies.removeAtIndex(i)
+                            break
+                        }
                     }
                 }
             }
