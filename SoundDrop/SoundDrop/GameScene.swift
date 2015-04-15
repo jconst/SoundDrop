@@ -6,7 +6,6 @@
 //  Copyright (c) 2015 jconst. All rights reserved.
 //
 
-import AVFoundation
 import SpriteKit
 
 class GameScene: SKScene, SKPhysicsContactDelegate {
@@ -22,7 +21,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     let bumperCategory: UInt32 = 1
     var dropDelay = 0.8
     
-    var audioPlayer = AVAudioPlayer()
+    let samplePlayer = SamplePlayer()
     
     override func didMoveToView(view: SKView) {
         // Set gravity
@@ -34,17 +33,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         let tapRec = UITapGestureRecognizer(target: self, action: "didTap:")
         view.addGestureRecognizer(tapRec)
-        let kickSound = NSURL(fileURLWithPath: NSBundle.mainBundle().pathForResource("kick", ofType: "wav")!)
-        audioPlayer = AVAudioPlayer(contentsOfURL: kickSound, error: nil)
-        audioPlayer.prepareToPlay()
     }
     
     func createLock() {
         lock = SKSpriteNode(imageNamed: "lock")
         lock!.name = "lock"
-        lock!.position = CGPointMake(20, 20)
-        lock!.xScale = 0.1
-        lock!.yScale = 0.1
+        lock!.position = CGPointMake(25, 25)
+        lock!.xScale = 0.15
+        lock!.yScale = 0.15
         
         self.addChild(lock!)
     }
@@ -52,9 +48,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     func createBass() {
         bass = SKSpriteNode(imageNamed: "bass")
         bass!.name = "bass"
-        bass!.position = CGPointMake(20, 50)
-        bass!.xScale = 0.1
-        bass!.yScale = 0.1
+        bass!.position = CGPointMake(25, 65)
+        bass!.xScale = 0.15
+        bass!.yScale = 0.15
         
         self.addChild(bass!)
     }
@@ -176,7 +172,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         bumper.physicsBody!.restitution = 0.5
         bumper.physicsBody!.friction = 0
         bumper.physicsBody!.affectedByGravity = false
-        bumper.physicsBody!.allowsRotation = true
+        bumper.physicsBody!.allowsRotation = false
         bumper.physicsBody!.categoryBitMask = bumperCategory
         
         self.addChild(bumper)
@@ -227,17 +223,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             if line.physicsBody! == contact.bodyA ||
                line.physicsBody! == contact.bodyB {
                 if line == bassLine {
-                    playKick()
+                    samplePlayer.playKick()
                 } else {
                     soundManager.playBounceWithMidiNote(Int32(noteForSpeed(Double(contact.collisionImpulse))))
                 }
             }
         }
-    }
-    
-    func playKick() {
-        audioPlayer.stop()
-        audioPlayer.currentTime = 0
-        audioPlayer.play()
     }
 }
