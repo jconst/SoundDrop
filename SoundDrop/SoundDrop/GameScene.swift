@@ -137,7 +137,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                     }
                 }
             }
-        } else {
+        } else if touches.count == 2 {
             if let touch = touches.anyObject() as? UITouch {
                 let height = 1.0 - (touch.locationInNode(self).y / self.size.height)
                 dropDelay = Double(height)
@@ -149,12 +149,26 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         if let name = draggedNode?.name? {
             if contains(["lock", "bass", "cross"], name) {
                 draggedNode!.removeFromParent()
-                for line in lineBumpers {
-                    if draggedNode!.intersectsNode(line) &&
-                       name == "lock" {
-                        let cp = line.copy() as SKSpriteNode
-                        lineCopies.append(cp)
-                        self.addChild(cp)
+                for (i, line) in enumerate(lineBumpers) {
+                    if draggedNode!.intersectsNode(line) {
+                        if name == "lock" {
+                            let cp = line.copy() as SKSpriteNode
+                            lineCopies.append(cp)
+                            self.addChild(cp)
+                        } else if name == "bass" {
+                            bassLine = line
+                        } else if name == "cross" {
+                            if bassLine == line {
+                                bassLine = nil
+                            }
+                            if i >= oscSender.activeHosts.count {
+                                line.removeFromParent()
+                                lineBumpers.removeAtIndex(i)
+                                lineRotations.removeAtIndex(i)
+                                lineLocations.removeAtIndex(i)
+                                break
+                            }
+                        }
                     }
                 }
                 for (i, line) in reverse(Array(enumerate(lineCopies))) {
@@ -235,12 +249,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         for (i, line) in enumerate(lineBumpers) {
             if line.physicsBody! == contact.bodyA ||
                line.physicsBody! == contact.bodyB {
-                oscSender.playBounce(Double(contact.collisionImpulse), device: i)
-                soundManager.playBounceWithMidiNote(Int32(noteForSpeed(Double(contact.collisionImpulse))))
+                if line == bassLine {
+                    samplePlayer.playKick()
+                } else {
+                    oscSender.playBounce(Double(contact.collisionImpulse), device: i)
+                    soundManager.playBounceWithMidiNote(Int32(noteForSpeed(Double(contact.collisionImpulse))))
+                }
             }
         }
         
-        for (i, line) in enumerate(lineCopies) {
+        for line in lineCopies {
             if line.physicsBody! == contact.bodyA ||
                line.physicsBody! == contact.bodyB {
                 if line == bassLine {
