@@ -41,7 +41,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     func createLock() {
         lock = SKSpriteNode(imageNamed: "lock")
         lock!.name = "lock"
-        lock!.position = CGPointMake(25, 25)
+        lock!.position = CGPointMake(35, 35)
         lock!.xScale = 0.15
         lock!.yScale = 0.15
         
@@ -51,7 +51,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     func createCross() {
         cross = SKSpriteNode(imageNamed: "cross")
         cross!.name = "cross"
-        cross!.position = CGPointMake(25, 80)
+        cross!.position = CGPointMake(35, 90)
         cross!.xScale = 0.13
         cross!.yScale = 0.13
         
@@ -61,7 +61,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     func createBass() {
         bass = SKSpriteNode(imageNamed: "bass")
         bass!.name = "bass"
-        bass!.position = CGPointMake(25, 125)
+        bass!.position = CGPointMake(35, 135)
         bass!.xScale = 0.15
         bass!.yScale = 0.15
         
@@ -191,14 +191,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         if rec.numberOfTouches() == 1 {
             var location = rec.locationInView(self.view!)
             location.y = self.view!.frame.size.height - location.y
-            lineRotations.append(0)
             lineLocations.append(normalizeScreenPoint(location))
-            lineBumpers.append(createLineBumper(location, rotation: 0))
+            let randomFloat = Float(arc4random()) / Float(UINT32_MAX)
+            let rotation = Double(randomFloat) * 2.0 * M_PI
+            lineRotations.append(CGFloat(rotation))
+            lineBumpers.append(createLineBumper(location, rotation: CGFloat(rotation)))
         }
     }
     
     func createLineBumper(location: CGPoint, rotation: CGFloat) -> SKSpriteNode {
-        let bumper = SKSpriteNode(color: UIColor.whiteColor(), size: CGSizeMake(130, 12))
+        let bumper = SKSpriteNode(color: UIColor.whiteColor(), size: CGSizeMake(110, 15))
         
         bumper.position = location
         updateLineBumper(bumper, location: location, rotation: rotation)

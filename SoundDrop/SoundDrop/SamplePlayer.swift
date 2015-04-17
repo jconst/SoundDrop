@@ -16,7 +16,7 @@ class SamplePlayer: NSObject {
     var curChannel = 0
     
     required override init() {
-        let kickSound = NSURL(fileURLWithPath: NSBundle.mainBundle().pathForResource("kick", ofType: "wav")!)
+        let kickSound = NSURL(fileURLWithPath: NSBundle.mainBundle().pathForResource("kick2", ofType: "wav")!)
         for i in 0..<channels {
             let audioPlayer = AVAudioPlayer(contentsOfURL: kickSound, error: nil)
             audioPlayer.prepareToPlay()

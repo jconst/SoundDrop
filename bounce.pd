@@ -163,21 +163,21 @@
 #X connect 72 0 3 0;
 #X coords 0 -1 1 1 100 15 1 100 100;
 #X restore 154 366 pd adsr;
-#X obj 301 153 hsl 100 15 0 100 0 0 empty empty attack 5 7 0 10 -262144
+#X obj 409 189 hsl 100 15 0 100 0 0 empty empty attack 5 7 0 10 -262144
 -1 -1 99 1;
-#X obj 301 179 hsl 100 15 0 100 0 0 empty empty decay 5 7 0 10 -262144
+#X obj 409 215 hsl 100 15 0 100 0 0 empty empty decay 5 7 0 10 -262144
 -1 -1 990 1;
-#X obj 301 204 hsl 100 15 0 100 0 0 empty empty sustain 5 7 0 10 -262144
+#X obj 409 240 hsl 100 15 0 100 0 0 empty empty sustain 5 7 0 10 -262144
 -1 -1 198 1;
-#X obj 301 231 hsl 100 15 0 100 0 0 empty empty release 5 7 0 10 -262144
+#X obj 409 267 hsl 100 15 0 100 0 0 empty empty release 5 7 0 10 -262144
 -1 -1 4950 1;
-#X obj 301 256 hsl 100 15 0 4000 0 0 empty empty segment_length 5 7
+#X obj 409 292 hsl 100 15 0 4000 0 0 empty empty segment_length 5 7
 0 10 -262144 -1 -1 1856 1;
-#X obj 301 281 hsl 100 15 0 1 0 0 empty empty attack_level 5 7 0 10
+#X obj 409 317 hsl 100 15 0 1 0 0 empty empty attack_level 5 7 0 10
 -262144 -1 -1 9900 1;
-#X obj 301 308 hsl 100 15 0 1 0 0 empty empty sustain_level 5 7 0 10
+#X obj 409 344 hsl 100 15 0 1 0 0 empty empty sustain_level 5 7 0 10
 -262144 -1 -1 2475 1;
-#X obj 301 333 hsl 100 15 0 1 0 0 empty empty note_volume 5 7 0 10
+#X obj 409 369 hsl 100 15 0 1 0 0 empty empty note_volume 5 7 0 10
 -262144 -1 -1 4950 1;
 #X floatatom 107 462 5 0 0 3 attack - -, f 5;
 #X floatatom 165 462 5 0 0 3 decay - -, f 5;
@@ -186,7 +186,7 @@
 #X floatatom 339 462 5 0 0 3 total_time(ms) - -, f 5;
 #X obj 52 333 r notebang;
 #X obj 42 45 s notebang;
-#X obj 134 298 osc~ 440;
+#X obj 131 285 osc~ 440;
 #X obj 539 136 loadbang;
 #X msg 539 164 1;
 #X obj 613 159 loadbang;
@@ -212,6 +212,7 @@
 #X obj 133 256 mtof;
 #X msg 163 95 60 100;
 #X obj 29 129 unpack 0 0;
+#X obj 255 266 expr~ $v1 * $v1;
 #X connect 0 0 16 0;
 #X connect 1 0 38 0;
 #X connect 1 1 10 0;
@@ -229,6 +230,7 @@
 #X connect 9 0 1 9;
 #X connect 15 0 1 0;
 #X connect 17 0 1 1;
+#X connect 17 0 42 0;
 #X connect 18 0 19 0;
 #X connect 19 0 2 0;
 #X connect 20 0 21 0;
@@ -253,3 +255,4 @@
 #X connect 39 0 17 0;
 #X connect 40 0 41 0;
 #X connect 41 0 36 0;
+#X connect 42 0 1 1;

@@ -46,7 +46,7 @@ class OSCSender: NSObject {
                             if let d = Int(index.floatValue()) as Int! {
                                 if lineRotations.count > d {
                                     let newRot = CGFloat(x.floatValue() * Float(M_PI_2)) + CGFloat(M_PI_2)
-                                    lineRotations[d] = lerp(lineRotations[d], newRot, 0.8)
+                                    lineRotations[d] = lerp(lineRotations[d], newRot, 0.7)
                                 }
                             }
                         }

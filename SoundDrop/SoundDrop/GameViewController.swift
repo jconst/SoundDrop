@@ -191,7 +191,7 @@ class GameViewController: UIViewController, NSNetServiceBrowserDelegate
         if distanceBetween(closest, point) > maxJump {
             return point
         }
-        return closest//lerp(point, closest, 0.5)
+        return lerp(point, closest, 0.8)
     }
     
     func clearLines() {
