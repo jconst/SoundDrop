@@ -271,4 +271,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             }
         }
     }
+    
+    func reset() {
+        for line in lineBumpers + lineCopies {
+            line.removeFromParent()
+        }
+        lineBumpers = []
+        lineCopies = []
+    }
 }

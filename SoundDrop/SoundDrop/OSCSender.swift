@@ -19,6 +19,11 @@ class OSCSender: NSObject {
         inPort.setDelegate(self)
     }
     
+    func reset() {
+        activeHosts = [String: Bool]()
+        externalPorts = [OSCOutPort]()
+    }
+    
     func receivedOSCMessage(msg: OSCMessage) {
         if msg.address() == "/urMus/text" {
             if let s = msg.value().stringValue() as NSString! {

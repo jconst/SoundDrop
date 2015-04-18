@@ -197,11 +197,8 @@ class GameViewController: UIViewController, NSNetServiceBrowserDelegate
     func clearLines() {
         lineRotations = []
         lineLocations = []
-        for line in gameScene!.lineBumpers + gameScene!.lineCopies {
-            line.removeFromParent()
-        }
-        gameScene!.lineBumpers = []
-        gameScene!.lineCopies = []
+        gameScene!.reset()
+        oscSender.reset()
     }
     
     override func shouldAutorotate() -> Bool {
