@@ -76,7 +76,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         dropper.xScale = 0.3
         dropper.yScale = 0.3
         
-        dropper.position = CGPointMake(0.5*self.frame.size.width, self.frame.size.height*0.75)
+        dropper.position = CGPointMake(0.5*self.frame.size.width, self.frame.size.height*0.9)
         self.addChild(dropper)
     }
     
@@ -211,13 +211,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         bumper.physicsBody!.affectedByGravity = false
         bumper.physicsBody!.allowsRotation = false
         bumper.physicsBody!.categoryBitMask = bumperCategory
+        bumper.physicsBody!.collisionBitMask = ballCategory
         
         self.addChild(bumper)
         return bumper
     }
     
     func updateLineBumper(bumper: SKSpriteNode, location: CGPoint, rotation: CGFloat) {
-        let move = SKAction.moveTo(location, duration: snapshotInterval)
+        let move = SKAction.moveTo(location, duration: snapshotInterval/2)
         bumper.runAction(move)
         let lastRotation = bumper.zRotation
         let rotate = SKAction.rotateByAngle(CGFloat(rotation - lastRotation), duration: 0)
